@@ -1,0 +1,78 @@
+Objetivo:
+Diseñar una solución de consolidación de reportes de interrupciones en Microsoft 365, centralizando información proveniente de tres fuentes distintas (Power Apps, archivos Excel y correos electrónicos) en una única estructura de datos que posteriormente pueda ser revisada y enriquecida por un analista antes de ser consumida por Power BI.
+
+Fuentes de información:
+1. Power Apps
+   - Actualmente registra información en una lista de SharePoint existente.
+   - La información ya se encuentra estructurada.
+
+2. Excel
+   - Cada área registra sus interrupciones en archivos Excel almacenados en SharePoint.
+   - La estructura de carpetas suele ser:
+     [Área] → [Año] → [Reporte de Interrupciones o Seguimiento de Actividades] → Reporte.xlsx
+   - Existen múltiples áreas y múltiples archivos.
+   - El proceso de consolidación debe evitar descargas manuales.
+
+3. Correo electrónico
+   - Algunas áreas reportan mediante correo.
+   - Se requiere interpretar el contenido del mensaje para identificar interrupciones o ausencia de estas y convertir la información en registros estructurados.
+
+Requisitos principales:
+
+- Si se llega a usar mediante un flujo de Power Automate debe ser disparador manual.
+- Se busca minimizar trabajo manual de consolidación.
+- Debe existir capacidad de revisión y modificación posterior por parte de un analista.
+- Algunos campos pueden determinarse automáticamente mediante reglas de negocio, pero otros requieren criterio humano.
+- Se debe conservar la trazabilidad del origen de cada registro.
+
+Arquitectura propuesta:
+
+1. Lista SharePoint "Interrupciones_Raw"
+   - Recibe información de las 3 fuentes.
+   - Almacena los datos originales sin intervención manual.
+   - Incluye campos técnicos como:
+     - Origen (APP, EXCEL, CORREO)
+     - IDOrigen
+     - FechaCarga
+     - Procesado
+     - FechaProcesado
+
+2. Lista SharePoint "Interrupciones_Consolidado" (fase posterior)
+   - Contiene la información normalizada y lista para análisis.
+   - Permite modificaciones manuales por parte del analista.
+   - Evita sobrescribir decisiones de negocio realizadas posteriormente.
+
+Campos principales del modelo de interrupciones estandar:
+
+Área
+Open
+Close
+Negocio
+Aplicativo o proveedor afectado
+Descripción
+Plan de acción
+Impacto en procesos
+Paralización de procesos
+Afectación del equipo
+ER
+%
+Ticket generado
+Fecha Inicio
+Hora Inicio
+Fecha Fin
+Hora Fin
+Duración reportada
+Duración real (Calculada según críterios)
+Estado (Calculado según criterios estandar o por analista)
+Motivo de desestimación (Valores puntuales)
+Tipo de Interrupción
+Comentarios
+Mes
+
+Consideraciones:
+- Open y Close provienen de una fuente distinta porque se refiere a la hora en la que labora el área específica.
+- Power Query se utilizaría preferentemente para análisis, indicadores, relaciones y transformaciones analíticas, no como repositorio editable.
+- La prioridad actual es diseñar la capa de captura y consolidación automática.
+
+Indicame cuales serían las herramientas más óptimas, estaba pensando en lista en sahrepoint para que sea más facil el manejo en automate pero orientame mejor. Recuerda que es todo en el entorno de Microsoft y que no
+vale usar máquinas virtuales, apis ni nada por ese lado.
