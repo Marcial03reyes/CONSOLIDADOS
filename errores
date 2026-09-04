@@ -1,2 +1,31 @@
-ActionFailed
-An action failed. No dependent actions succeeded.
+{
+    "foreachItems": [
+        {
+            "ItemId": 0,
+            "Id": "%252fShared%2bDocuments%252f%25c3%2581reas%252fModelo%2bDIA",
+            "Name": "Modelo DIA",
+            "DisplayName": "Modelo DIA",
+            "Path": "/Shared Documents/Áreas/Modelo DIA",
+            "LastModified": "2026-02-03T15:35:48Z",
+            "Size": 0,
+            "IsFolder": true
+        },
+        {
+            "ItemId": 0,
+            "Id": "%252fShared%2bDocuments%252f%25c3%2581reas%252fEstrategias%2bCalls",
+            "Name": "Estrategias Calls",
+            "DisplayName": "Estrategias Calls",
+            "Path": "/Shared Documents/Áreas/Estrategias Calls",
+            "LastModified": "2026-02-03T15:28:27Z",
+            "Size": 0,
+            "IsFolder": true
+        },
+        {
+            "ItemId": 0,
+            "Id": "%252fShared%2bDocuments%252f%25c3%2581reas%252fBeneficios%2bNV",
+            "Name": "Beneficios NV",
+            "DisplayName": "Beneficios NV",
+            "Path": "/Shared Documents/Áreas/Beneficios NV",
+            "LastModified": "2026-02-03T15:23:30Z",
+            "Size": 0,
+            "IsFolder": true
