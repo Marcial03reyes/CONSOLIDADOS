@@ -1,7 +1,1 @@
-MesNumero = List.PositionOf(
-    {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"},
-    Text.Proper([Mes])
-) + 1
-
-
-Fecha = #date([Año], [MesNumero], 1)
+= Table.ReplaceValue(Emision_rp,"Call De Servicio","Call De Servicios",Replacer.ReplaceText,{"Área"})
