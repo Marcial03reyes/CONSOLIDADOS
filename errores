@@ -1,1 +1,1 @@
-
+InvalidTemplate. Unable to process template language expressions in action 'Is_folder' inputs at line '0' and column '0': 'The template language expression 'body('Areas_lists')?['value']' cannot be evaluated because property 'value' cannot be selected. Array elements can only be selected using an integer index. Please see https://aka.ms/logicexpressions for usage details.'.
