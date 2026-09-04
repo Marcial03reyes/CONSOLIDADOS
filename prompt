@@ -33,6 +33,11 @@ let
     Canales_masivos_serv = Table.ReplaceValue(Servicios_vida_grupo,"Canales Masivos De Servicio","Canales Masivos De Servicios",Replacer.ReplaceText,{"Área"}),
     Reembolsos_eps = Table.ReplaceValue(Canales_masivos_serv,"Reembolsos (Eps)","Reembolos Eps",Replacer.ReplaceText,{"Área"}),
     Emision_rp = Table.ReplaceValue(Reembolsos_eps,"Emisión Rieago Patrimonial","Emisión Riesgo Patrimonial",Replacer.ReplaceText,{"Área"}),
-    Call_servicios = Table.ReplaceValue(Emision_rp,"Call De Servicio","Call De Servicios",Replacer.ReplaceText,{"Área"})
+    Call_servicios = Table.ReplaceValue(Emision_rp,"Call De Servicio","Call De Servicios",Replacer.ReplaceText,{"Área"}),
+    Central_sanna = Table.ReplaceValue(Call_servicios,"Central Sanna","Central SANNA",Replacer.ReplaceText,{"Área"}),
+    Chatbot_vera = Table.ReplaceValue(Central_sanna,"Chatbot Vera","Chatbot VERA",Replacer.ReplaceText,{"Área"}),
+    Modelo_dia = Table.ReplaceValue(Chatbot_vera,"Modelo Dia","Modelo DIA",Replacer.ReplaceText,{"Área"}),
+    Siniestros_llpp_soat = Table.ReplaceValue(Modelo_dia,"Siniestros Llpp Y Soat","Siniestros LLPP y SOAT",Replacer.ReplaceText,{"Área"}),
+    Beneficios_nv = Table.ReplaceValue(Siniestros_llpp_soat,"Beneficios Nv","Beneficios NV",Replacer.ReplaceText,{"Área"})
 in
-    Call_servicios
+    Beneficios_nv
