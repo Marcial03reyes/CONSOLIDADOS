@@ -1,36 +1,40 @@
+INPUT:
+{"apiId":"subscriptions/default-66dc1f77-2e0d-4d13-b961-7c2e63aa376b/providers/Microsoft.Web/locations/brazilsouth/runtimes/brazil-001/apis/sharepointonline",
+"connectionReferenceName":"shared_sharepointonline","operationId":"ListFolder"}
+
+OUTPUT:
 {
-    "statusCode": 200,
+    "statusCode": 400,
     "headers": {
         "Cache-Control": "max-age=0, private",
-        "Transfer-Encoding": "chunked",
-        "Vary": "Origin,Accept-Encoding",
+        "Vary": "Origin",
         "X-FD-RouteKey": "pacificocia",
-        "X-NetworkStatistics": "6,2097120,113,10517,11572772,298960,298960,120878",
-        "X-MSEdge-Ref": "MIRA: eb9f776e-66a7-484b-3c88-6060e0082048 CP5P284CA0121 2026-09-04T15:05:18.667Z",
+        "X-NetworkStatistics": "3,524280,228,88202,21487432,2479186,2479186,115100",
+        "X-MSEdge-Ref": "MIRA: 44504367-718c-d414-a5a3-3f287dce8739 CP5P284CA0153 2026-09-04T15:27:49.620Z",
         "X-1DSCollectorUrl": "https://mobile.events.data.microsoft.com/OneCollector/1.0/",
         "IsOCDI": "0",
-        "Request-Id": "eb9f776e-66a7-484b-3c88-6060e0082048",
+        "Request-Id": "44504367-718c-d414-a5a3-3f287dce8739",
         "DATASERVICEVERSION": "3.0",
         "X-NanoProxy": "1",
-        "SPRequestGuid": "d1f57a9c-e518-42cc-842d-2dbad56f6f6b",
-        "X-FD-RouteKeyApplicationEndpointList": "17888-IPV4V6.CLUMP.DPRODMGD105.AA-RT.SHAREPOINT.COM",
+        "SPRequestGuid": "ec2a81b9-b80d-4100-8057-5748783bc7aa",
+        "X-FD-RouteKeyApplicationEndpointList": "17888-ipv4v6.clump.dprodmgd105.aa-rt.sharepoint.com",
         "Content-Security-Policy": "frame-ancestors 'self' teams.microsoft.com *.teams.microsoft.com *.skype.com *.teams.microsoft.us local.teams.office.com teams.cloud.microsoft *.office365.com goals.cloud.microsoft *.powerapps.com *.powerbi.com *.yammer.com engage.cloud.microsoft word.cloud.microsoft excel.cloud.microsoft powerpoint.cloud.microsoft *.officeapps.live.com *.office.com *.microsoft365.com m365.cloud.microsoft *.cloud.microsoft *.stream.azure-test.net *.dynamics.com *.microsoft.com onedrive.live.com *.onedrive.live.com teams.microsoft.com *.teams.microsoft.com securebroker.sharepointonline.com;",
         "MicrosoftSharePointTeamServices": "16.0.0.27619",
-        "MS-CV": "ojfyC+rwAPApUHYjtXLQIQ.0",
-        "X-FEServer": "CP5P284CA0121",
+        "MS-CV": "ojfzVbsgAPBSRYogwT/gmw.0",
+        "X-FEServer": "CP5P284CA0153",
         "X-MS-SPConnector": "1",
-        "SPClientServiceRequestDuration": "36",
-        "SPLogId": "0bf237a2-f0ea-f000-2950-7623b572d021",
+        "SPClientServiceRequestDuration": "18",
+        "SPLogId": "55f337a2-20bb-f000-5245-8a20c13fe09b",
         "X-AriaCollectorURL": "https://browser.pipe.aria.microsoft.com/Collector/3.0/",
         "X-SP-SERVERSTATE": "ReadOnly=0",
         "X-DataBoundary": "NONE",
-        "X-BackEndHttpStatus": "200",
+        "X-BackEndHttpStatus": "400",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
         "X-MS-InvokeApp": "1; RequireReadOnly",
-        "X-Proxy-BackendServerStatus": "200",
+        "X-Proxy-BackendServerStatus": "400",
         "X-Proxy-RoutingCorrectness": "1",
-        "X-SharePointHealthScore": "3",
+        "X-SharePointHealthScore": "0",
         "X-FirstHopCafeEFZ": "CPQ",
         "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -44,46 +48,18 @@
         "x-ms-dlp-ef": "-|-/-|-|-|-|-",
         "x-ms-mip-sl": "-|-|-|-",
         "x-ms-au-creator-id": "35af7165-1b16-4da8-b4ce-ce0834dc964d",
-        "x-ms-plex-worker-metadata": "sharepointonline/bucket:6",
+        "x-ms-plex-worker-metadata": "sharepointonline/bucket:1",
         "Timing-Allow-Origin": "*",
         "x-ms-apihub-cached-response": "true",
         "x-ms-apihub-obo": "false",
-        "Date": "Fri, 04 Sep 2026 15:05:18 GMT",
-        "Content-Type": "application/json; charset=utf-8",
-        "Expires": "Thu, 20 Aug 2026 15:05:18 GMT",
-        "Last-Modified": "Fri, 04 Sep 2026 15:05:18 GMT",
-        "Content-Length": "1252"
+        "Date": "Fri, 04 Sep 2026 15:27:49 GMT",
+        "Content-Length": "173",
+        "Content-Type": "application/json",
+        "Expires": "Thu, 20 Aug 2026 15:27:49 GMT",
+        "Last-Modified": "Fri, 04 Sep 2026 15:27:49 GMT"
     },
-    "body": [
-        {
-            "ItemId": 0,
-            "Id": "%252fShared%2bDocuments%252f%25c3%2581reas%252fBuz%25c3%25b3n%2bde%2bAtenci%25c3%25b3n%2bal%2bCliente%252f02.%2b2024%252f01.%2bPlan%2bDetallado%2b2024",
-            "Name": "01. Plan Detallado 2024",
-            "DisplayName": "01. Plan Detallado 2024",
-            "Path": "/Shared Documents/Áreas/Buzón de Atención al Cliente/02. 2024/01. Plan Detallado 2024",
-            "LastModified": "2024-01-25T15:51:13Z",
-            "Size": 0,
-            "IsFolder": true
-        },
-        {
-            "ItemId": 0,
-            "Id": "%252fShared%2bDocuments%252f%25c3%2581reas%252fBuz%25c3%25b3n%2bde%2bAtenci%25c3%25b3n%2bal%2bCliente%252f02.%2b2024%252f02.%2bSeguimiento%2bde%2bActividades",
-            "Name": "02. Seguimiento de Actividades",
-            "DisplayName": "02. Seguimiento de Actividades",
-            "Path": "/Shared Documents/Áreas/Buzón de Atención al Cliente/02. 2024/02. Seguimiento de Actividades",
-            "LastModified": "2024-02-01T20:12:59Z",
-            "Size": 0,
-            "IsFolder": true
-        },
-        {
-            "ItemId": 0,
-            "Id": "%252fShared%2bDocuments%252f%25c3%2581reas%252fBuz%25c3%25b3n%2bde%2bAtenci%25c3%25b3n%2bal%2bCliente%252f02.%2b2024%252f03.%2bReporte%2bde%2bIncidentes",
-            "Name": "03. Reporte de Incidentes",
-            "DisplayName": "03. Reporte de Incidentes",
-            "Path": "/Shared Documents/Áreas/Buzón de Atención al Cliente/02. 2024/03. Reporte de Incidentes",
-            "LastModified": "2024-02-01T16:43:06Z",
-            "Size": 0,
-            "IsFolder": true
-        }
-    ]
+    "body": {
+        "status": 400,
+        "message": "Route did not match\r\nclientRequestId: ec2a81b9-b80d-4100-8057-5748783bc7aa\r\nserviceRequestId: 55f337a2-20bb-f000-5245-8a20c13fe09b"
+    }
 }
