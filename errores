@@ -1,4 +1,4 @@
-@and(
+and(
   greaterOrEquals(item()?['Fecha'], '2026-07-01'),
   less(
     if(
