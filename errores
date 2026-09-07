@@ -38,6 +38,22 @@ let
     Chatbot_vera = Table.ReplaceValue(Central_sanna,"Chatbot Vera","Chatbot VERA",Replacer.ReplaceText,{"Área"}),
     Modelo_dia = Table.ReplaceValue(Chatbot_vera,"Modelo Dia","Modelo DIA",Replacer.ReplaceText,{"Área"}),
     Siniestros_llpp_soat = Table.ReplaceValue(Modelo_dia,"Siniestros Llpp Y Soat","Siniestros LLPP y SOAT",Replacer.ReplaceText,{"Área"}),
-    Beneficios_nv = Table.ReplaceValue(Siniestros_llpp_soat,"Beneficios Nv","Beneficios NV",Replacer.ReplaceText,{"Área"})
+    Beneficios_nv = Table.ReplaceValue(Siniestros_llpp_soat,"Beneficios Nv","Beneficios NV",Replacer.ReplaceText,{"Área"}),
+    Siniestros_ssgg = Table.ReplaceValue(Beneficios_nv,"Siniestros Ssgg","Siniestros SSGG",Replacer.ReplaceText,{"Área"}),
+    Call_servicioss = Table.ReplaceValue(Siniestros_ssgg,"Call De Servicioss","Call De Servicios",Replacer.ReplaceText,{"Área"}),
+    Central_info_consultas = Table.ReplaceValue(Call_servicioss,"Central Información Y Consultas","Central Información y Consultas",Replacer.ReplaceText,{"Área"}),
+    Cic_salud = Table.ReplaceValue(Central_info_consultas,"Cic Salud","CIC Salud",Replacer.ReplaceText,{"Área"}),
+    Cicsalud = Table.ReplaceValue(Cic_salud,"CIcsalud","CIC Salud",Replacer.ReplaceText,{"Área"}),
+    Emision_riesgo_patrimonial2 = Table.ReplaceValue(Cicsalud,"Emision Riesgo Patrimonial","Emisión Riesgo Patrimonial",Replacer.ReplaceText,{"Área"}),
+    Emision_salud = Table.ReplaceValue(Emision_riesgo_patrimonial2,"Emision Salud","Emisión Salud",Replacer.ReplaceText,{"Área"}),
+    Emision_vg_vi_rp = Table.ReplaceValue(Emision_salud,"Emisión Vg, Vi Y RPp","Emisión VG, VI y RP",Replacer.ReplaceText,{"Área"}),
+    Gdh_eps = Table.ReplaceValue(Emision_vg_vi_rp,"Gdh Eps","GDH EPS",Replacer.ReplaceText,{"Área"}),
+    Gestion_polizas1 = Table.ReplaceValue(Gdh_eps,"Gestión de Pólizas Vehiculares Bs&AI","Gestión de Pólizas Vehiculares Bs & AI",Replacer.ReplaceText,{"Área"}),
+    Gestion_polizas2 = Table.ReplaceValue(Gestion_polizas1,"Gestión de Pólizas Vehicures Bs & AI","Gestión de Pólizas Vehiculares Bs & AI",Replacer.ReplaceText,{"Área"}),
+    Gestion_documental = Table.ReplaceValue(Gestion_polizas2,"Gestión Docuemental","Gestión Documental",Replacer.ReplaceText,{"Área"}),
+    Gio_mayus = Table.ReplaceValue(Gestion_documental,"Gio","GIO",Replacer.ReplaceText,{"Área"}),
+    Liquidacion_salud = Table.ReplaceValue(Gio_mayus,"Liquidacion Salud","Liquidaciones Salud",Replacer.ReplaceText,{"Área"}),
+    Reembolsos_eps2 = Table.ReplaceValue(Liquidacion_salud,"Reembolos Eps","Reembolsos EPS",Replacer.ReplaceText,{"Área"}),
+    Reembolso_eps1 = Table.ReplaceValue(Reembolsos_eps2,"Reembolso Eps","Reembolsos EPS",Replacer.ReplaceText,{"Área"})
 in
-    Beneficios_nv
+    Reembolso_eps1
