@@ -7,7 +7,37 @@ let
     #"Filas filtradas" = Table.SelectRows(Extraer_anio, each ([Name] <> "SUCAVE.xlsx")),
     Correcion_septiembre = Table.ReplaceValue(#"Filas filtradas","Setiembre","Septiembre",Replacer.ReplaceText,{"Texto entre delimitadores"}),
     #"Archivos ocultos filtrados1" = Table.SelectRows(Correcion_septiembre, each [Attributes]?[Hidden]? <> true),
-    #"Invocar función personalizada1" = Table.AddColumn(#"Archivos ocultos filtrados1", "Resultado", each try #"Transformar archivo"([Content])),
-    Marca_error = Table.AddColumn(#"Invocar función personalizada1", "TieneError", each [Resultado][HasError])
+    #"Invocar función personalizada1" = Table.AddColumn(#"Archivos ocultos filtrados1", "Transformar archivo", each #"Transformar archivo"([Content])),
+    #"Otras columnas quitadas1" = Table.SelectColumns(#"Invocar función personalizada1",{"Texto entre delimitadores", "Texto entre delimitadores.1", "Transformar archivo"}),
+    #"Columna de tabla expandida1" = Table.ExpandTableColumn(#"Otras columnas quitadas1", "Transformar archivo", Table.ColumnNames(#"Transformar archivo"(#"Archivo de ejemplo"))),
+    #"Tipo cambiado" = Table.TransformColumnTypes(#"Columna de tabla expandida1",{{"Área", type text}, {"Open", type datetime}, {"Close", type datetime}, {"Negocio", type text}, {"Aplicativo o proveedor afectado", type text}, {"Aplicativo", type text}, {"Descripción", type text}, {"Plan de acción", type text}, {"Impacto en procesos", type text}, {"Paralización del proceso", type text}, {"Afectación del equipo", type any}, {"ER", Int64.Type}, {"%", type number}, {"Ticket generado", type any}, {"Fecha Inicio", type any}, {"Hora #(lf)Inicio", type any}, {"Fecha #(lf)Fin", type any}, {"Hora #(lf)Fin", type any}, {"Duración reportada", type any}, {"Duración real", type number}, {"Estado", type text}, {"Motivo de desestimación", type text}, {"Tipo de Interrupción", type text}, {"Comentarios", type text}, {"Mes", type text}}),
+    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Open", "Close", "Negocio", "Mes"}),
+    Formato_num_anio = Table.TransformColumnTypes(#"Columnas quitadas",{{"Texto entre delimitadores.1", Int64.Type}}),
+    MesNumero = Table.AddColumn(Formato_num_anio, "MesNumero", each List.PositionOf(
+    {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"},
+    Text.Proper([Texto entre delimitadores])
+) + 1),
+    Fecha = Table.AddColumn(MesNumero, "Fecha", each #date([Texto entre delimitadores.1], [MesNumero], 1)),
+    #"Columnas reordenadas" = Table.ReorderColumns(Fecha,{"Fecha", "Texto entre delimitadores", "Texto entre delimitadores.1", "Área", "Aplicativo o proveedor afectado", "Aplicativo", "Descripción", "Plan de acción", "Impacto en procesos", "Paralización del proceso", "Afectación del equipo", "ER", "%", "Ticket generado", "Fecha Inicio", "Hora #(lf)Inicio", "Fecha #(lf)Fin", "Hora #(lf)Fin", "Duración reportada", "Duración real", "Estado", "Motivo de desestimación", "Tipo de Interrupción", "Comentarios", "MesNumero"}),
+    Quitar_fechas_creadas = Table.RemoveColumns(#"Columnas reordenadas",{"Texto entre delimitadores", "Texto entre delimitadores.1", "MesNumero"}),
+    #"Nombre del mes insertado" = Table.AddColumn(Quitar_fechas_creadas, "Nombre del mes", each Date.MonthName([Fecha]), type text),
+    #"Año insertado" = Table.AddColumn(#"Nombre del mes insertado", "Año", each Date.Year([Fecha]), Int64.Type),
+    #"Mes insertado" = Table.AddColumn(#"Año insertado", "Mes", each Date.Month([Fecha]), Int64.Type),
+    #"Columnas reordenadas1" = Table.ReorderColumns(#"Mes insertado",{"Mes", "Año", "Nombre del mes", "Fecha", "Área", "Aplicativo o proveedor afectado", "Aplicativo", "Descripción", "Plan de acción", "Impacto en procesos", "Paralización del proceso", "Afectación del equipo", "ER", "%", "Ticket generado", "Fecha Inicio", "Hora #(lf)Inicio", "Fecha #(lf)Fin", "Hora #(lf)Fin", "Duración reportada", "Duración real", "Estado", "Motivo de desestimación", "Tipo de Interrupción", "Comentarios"}),
+    Campos_fechas_quitadas = Table.RemoveColumns(#"Columnas reordenadas1",{"Fecha"}),
+    Filtrando_fecha_inicio_fin = Table.SelectRows(Campos_fechas_quitadas, each ([Fecha Inicio] <> "9,10,11 y 30 de enero") and ([#"Fecha #(lf)Fin"] <> "Está durando 10 días" and [#"Fecha #(lf)Fin"] <> "Está durando 19 días" and [#"Fecha #(lf)Fin"] <> "Está durando 5 días" and [#"Fecha #(lf)Fin"] <> "No hay solución todavia, aún no hay solución, se requiere de un desarrollo, se esta escalando al equipo de squad para la priorización." and [#"Fecha #(lf)Fin"] <> "Pendiente" and [#"Fecha #(lf)Fin"] <> "Pendiente solución") and ([#"Hora #(lf)Fin"] <> "*Considerar que a la fecha no atienden el ticket." and [#"Hora #(lf)Fin"] <> "-" and [#"Hora #(lf)Fin"] <> "8:00 a.m")),
+    Formato_hora_inicio_fin = Table.TransformColumnTypes(Filtrando_fecha_inicio_fin,{{"Hora #(lf)Fin", type time}, {"Hora #(lf)Inicio", type time}}),
+    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(Formato_hora_inicio_fin,{{"Área", Text.Proper, type text}}),
+    Carta_garantia = Table.ReplaceValue(#"Poner En Mayúsculas Cada Palabra","Cartas de Garantia","Cartas de Garantía",Replacer.ReplaceText,{"Área"}),
+    Servicios_vida_grupo = Table.ReplaceValue(Carta_garantia,"Servicios Vida Gripo","Servicios Vida Grupo",Replacer.ReplaceText,{"Área"}),
+    Canales_masivos_serv = Table.ReplaceValue(Servicios_vida_grupo,"Canales Masivos De Servicio","Canales Masivos De Servicios",Replacer.ReplaceText,{"Área"}),
+    Reembolsos_eps = Table.ReplaceValue(Canales_masivos_serv,"Reembolsos (Eps)","Reembolos Eps",Replacer.ReplaceText,{"Área"}),
+    Emision_rp = Table.ReplaceValue(Reembolsos_eps,"Emisión Rieago Patrimonial","Emisión Riesgo Patrimonial",Replacer.ReplaceText,{"Área"}),
+    Call_servicios = Table.ReplaceValue(Emision_rp,"Call De Servicio","Call De Servicios",Replacer.ReplaceText,{"Área"}),
+    Central_sanna = Table.ReplaceValue(Call_servicios,"Central Sanna","Central SANNA",Replacer.ReplaceText,{"Área"}),
+    Chatbot_vera = Table.ReplaceValue(Central_sanna,"Chatbot Vera","Chatbot VERA",Replacer.ReplaceText,{"Área"}),
+    Modelo_dia = Table.ReplaceValue(Chatbot_vera,"Modelo Dia","Modelo DIA",Replacer.ReplaceText,{"Área"}),
+    Siniestros_llpp_soat = Table.ReplaceValue(Modelo_dia,"Siniestros Llpp Y Soat","Siniestros LLPP y SOAT",Replacer.ReplaceText,{"Área"}),
+    Beneficios_nv = Table.ReplaceValue(Siniestros_llpp_soat,"Beneficios Nv","Beneficios NV",Replacer.ReplaceText,{"Área"})
 in
-    Marca_error
+    Beneficios_nv
