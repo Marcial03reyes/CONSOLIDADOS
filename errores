@@ -1,1 +1,1 @@
-Flow run failed. Action 'Get_reporte_interrup' failed: The function operator 'substringog' is not supported or its usage is invalid. clientRequestId: f78a1d8f-e2e0-49a7-92e8-98c0ed49ca8d serviceRequestId: ddfa38a2-f0c8-f000-2950-77d4384ab4f7
+substringof('PRUEBA1', Title) or substringof('PRUEBA2', Title)
