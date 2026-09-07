@@ -1,27 +1,26 @@
-FORMATO 1:
-N°
-Aplicativo afectado o proveedors afectado
-Descripción de la interrupción 
-Plan de acción para la mitigación de la contingencia
-Impacto en los procesos
-Grado de Afectación del equipo
-Fecha Inicio
-Fecha Fin
-Hora Inicio
-Hora Fin
-Duración
-Ticket generado
+function main(workbook: ExcelScript.Workbook): { data: string[][] } {
+  let sheet = workbook.getWorksheets()[0];
+  let range = sheet.getUsedRange();
+  let values = range.getValues();
+  let headers = values[0] as string[];
 
-FORMATO 2:
-N°
-Aplicativo afectado o proveedors afectado
-Descripción de la interrupción
-Plan de acción para la mitigación de la contingencia
-Impacto en los procesos
-Grado de Afectación del equipo
-Fecha Inicio
-Fecha Fin
-Hora Inicio
-Hora Fin
-Duración
-Ticket generado
+  let mapa: { [key: string]: string } = {
+    "Aplicativo afectado o proveedors afectado": "Aplicativo o proveedor afectado",
+    "Descripción de la interrupción": "Descripción",
+    "Plan de acción para la mitigación de la contingencia": "Plan de acción",
+    "Impacto en los procesos": "Impacto en procesos",
+    "Grado de Afectación del equipo": "Afectación del equipo",
+    "Fecha Inicio": "Fecha Inicio",
+    "Fecha Fin": "Fecha Fin",
+    "Hora Inicio": "Hora Inicio",
+    "Hora Fin": "Hora Fin",
+    "Duración": "Duración reportada",
+    "Ticket generado": "Ticket generado"
+    // "N°" no se mapea - no corresponde a ningún campo estándar, se descarta
+  };
+
+  let headersEstandar = headers.map(h => mapa[h.trim()] || h);
+  let resultado = [headersEstandar, ...values.slice(1)];
+
+  return { data: resultado };
+}
