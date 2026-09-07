@@ -27,13 +27,18 @@ let
     Campos_fechas_quitadas = Table.RemoveColumns(#"Columnas reordenadas1",{"Fecha"}),
     Filtrando_fecha_inicio_fin = Table.SelectRows(Campos_fechas_quitadas, each ([Fecha Inicio] <> "9,10,11 y 30 de enero") and ([#"Fecha #(lf)Fin"] <> "Está durando 10 días" and [#"Fecha #(lf)Fin"] <> "Está durando 19 días" and [#"Fecha #(lf)Fin"] <> "Está durando 5 días" and [#"Fecha #(lf)Fin"] <> "No hay solución todavia, aún no hay solución, se requiere de un desarrollo, se esta escalando al equipo de squad para la priorización." and [#"Fecha #(lf)Fin"] <> "Pendiente" and [#"Fecha #(lf)Fin"] <> "Pendiente solución") and ([#"Hora #(lf)Fin"] <> "*Considerar que a la fecha no atienden el ticket." and [#"Hora #(lf)Fin"] <> "-" and [#"Hora #(lf)Fin"] <> "8:00 a.m")),
     Formato_hora_inicio_fin = Table.TransformColumnTypes(Filtrando_fecha_inicio_fin,{{"Hora #(lf)Fin", type time}, {"Hora #(lf)Inicio", type time}}),
-    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(Formato_hora_inicio_fin,{{"Área", Text.Proper, type text}}),
+    Limpiar_poliza_veh = Table.ReplaceValue(Formato_hora_inicio_fin,"Gestión de Pólizas Vehiculares BS & AL","Gestión de Pólizas Vehiculares BS&AL",Replacer.ReplaceText,{"Área"}),
+    #"Valor reemplazado2" = Table.ReplaceValue(Limpiar_poliza_veh,"Call de Servicioss","Call de Servicios",Replacer.ReplaceText,{"Área"}),
+    #"Valor reemplazado" = Table.ReplaceValue(#"Valor reemplazado2","Gestión de Pólizas Vehicures BS & AL","Gestión de Pólizas Vehiculares BS&AL",Replacer.ReplaceText,{"Área"}),
+    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(#"Valor reemplazado",{{"Área", Text.Proper, type text}}),
     Corregir_De = Table.TransformColumns(#"Poner En Mayúsculas Cada Palabra", {{"Área", each Text.Replace(_, " De ", " de "), type text}}),
     Corregir_Y = Table.TransformColumns(Corregir_De, {{"Área", each Text.Replace(_, " Y ", " y "), type text}}),
     Reemplazos_Area = {
         {"Servicios Vida Gripo", "Servicios Vida Grupo"},
+        {"Call de Servicio", "Call de Servicios"},
         {"Canales Masivos de Servicio", "Canales Masivos de Servicios"},
         {"Canales Masivos de Servicioss", "Canales Masivos de Servicios"},
+        {"Contabilidad Eps", "Contabilidad EPS"},
         {"Reembolsos (Eps)", "Reembolsos EPS"},
         {"Reembolos Eps", "Reembolsos EPS"},
         {"Reembolso Eps", "Reembolsos EPS"},
@@ -49,13 +54,10 @@ let
         {"Cartas de Garantia", "Cartas de Garantía"},
         {"Central Información y Consultas", "Central Información y Consultas"},
         {"Cic Salud", "CIC Salud"},
-        {"CIcsalud", "CIC Salud"},
+        {"Cicsalud", "CIC Salud"},
         {"Emision Salud", "Emisión Salud"},
         {"Emisión Vg, Vi y Rp", "Emisión VG, VI y RP"},
         {"Gdh Eps", "GDH EPS"},
-        {"Gestión de Pólizas Vehiculares", "Gestión de Pólizas Vehiculares Bs & AI"},
-        {"Gestión de Pólizas Vehiculares Bs&AI", "Gestión de Pólizas Vehiculares Bs & AI"},
-        {"Gestión de Pólizas Vehicures Bs & AI", "Gestión de Pólizas Vehiculares Bs & AI"},
         {"Gestión Docuemental", "Gestión Documental"},
         {"Gio", "GIO"},
         {"Liquidacion Salud", "Liquidaciones Salud"}
@@ -64,6 +66,9 @@ let
         Reemplazos_Area,
         Corregir_Y,
         (tablaActual, par) => Table.ReplaceValue(tablaActual, par{0}, par{1}, Replacer.ReplaceText, {"Área"})
-    )
+    ),
+    #"Valor reemplazado1" = Table.ReplaceValue(Areas_Corregidas,"Call de Servicioss","Call de Servicios",Replacer.ReplaceText,{"Área"}),
+    #"Valor reemplazado5" = Table.ReplaceValue(#"Valor reemplazado1","Gestión de Pólizas Vehiculares","Gestión de Pólizas Vehiculares BS&AL",Replacer.ReplaceValue,{"Área"}),
+    #"Valor reemplazado3" = Table.ReplaceValue(#"Valor reemplazado5","Gestión de Pólizas Vehiculares Bs&Al","Gestión de Pólizas Vehiculares BS&AL",Replacer.ReplaceText,{"Área"})
 in
-    Areas_Corregidas
+    #"Valor reemplazado3"
