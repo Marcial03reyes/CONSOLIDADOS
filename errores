@@ -1,7 +1,19 @@
 let
-    ListaHistorica = List.Distinct(Consulta_historica[Área]),
-    ListaOpenClose = List.Distinct(Areas_open_close[Title]),
-    FaltanEnOpenClose = List.Difference(ListaHistorica, ListaOpenClose),
-    FaltanEnHistorico = List.Difference(ListaOpenClose, ListaHistorica)
+    // Ajusta el nombre de columna si tu campo de fecha se llama distinto
+    FechaMinima = List.Min(Table.SelectColumns(Consulta_historica, {"Fecha Inicio"})[Fecha Inicio]),
+    FechaMaxima = List.Max(Table.SelectColumns(Consulta_Consolidado, {"Fecha Inicio"})[Fecha Inicio]),
+
+    FechaInicioCal = Date.From(FechaMinima),
+    FechaFinCal = Date.From(FechaMaxima),
+
+    ListaFechas = List.Dates(FechaInicioCal, Duration.Days(FechaFinCal - FechaInicioCal) + 1, #duration(1,0,0,0)),
+    Tabla = Table.FromList(ListaFechas, Splitter.SplitByNothing(), {"Fecha"}),
+    TipoFecha = Table.TransformColumnTypes(Tabla, {{"Fecha", type date}}),
+
+    Dia = Table.AddColumn(TipoFecha, "Dia", each Date.Day([Fecha]), Int64.Type),
+    MesNumero = Table.AddColumn(Dia, "MesNumero", each Date.Month([Fecha]), Int64.Type),
+    MesNombre = Table.AddColumn(MesNumero, "MesNombre", each Date.MonthName([Fecha], "es-ES"), type text),
+    Trimestre = Table.AddColumn(MesNombre, "Trimestre", each "T" & Text.From(Date.QuarterOfYear([Fecha])), type text),
+    Año = Table.AddColumn(Trimestre, "Año", each Date.Year([Fecha]), Int64.Type)
 in
-    [FaltanEnOpenClose = FaltanEnOpenClose, FaltanEnHistorico = FaltanEnHistorico]
+    Año
