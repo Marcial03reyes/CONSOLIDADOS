@@ -1,10 +1,27 @@
-@and(
-  equals(length(split(item()?['Name'], '.')?[0]), 2),
-  or(
-    greaterOrEquals(int(split(items('Apply_to_each_year')?['Name'], '. ')?[1]), 2027),
-    and(
-      equals(int(split(items('Apply_to_each_year')?['Name'], '. ')?[1]), 2026),
-      greaterOrEquals(int(split(item()?['Name'], '.')?[0]), 7)
-    )
-  )
-)
+FORMATO 1:
+N°
+Aplicativo afectado o proveedors afectado
+Descripción de la interrupción 
+Plan de acción para la mitigación de la contingencia
+Impacto en los procesos
+Grado de Afectación del equipo
+Fecha Inicio
+Fecha Fin
+Hora Inicio
+Hora Fin
+Duración
+Ticket generado
+
+FORMATO 2:
+N°
+Aplicativo afectado o proveedors afectado
+Descripción de la interrupción
+Plan de acción para la mitigación de la contingencia
+Impacto en los procesos
+Grado de Afectación del equipo
+Fecha Inicio
+Fecha Fin
+Hora Inicio
+Hora Fin
+Duración
+Ticket generado
