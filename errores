@@ -1,6 +1,7 @@
 let
     ListaHistorica = List.Distinct(Consulta_historica[Área]),
     ListaOpenClose = List.Distinct(Areas_open_close[Title]),
-    Diferencias = List.Difference(ListaHistorica, ListaOpenClose)
+    FaltanEnOpenClose = List.Difference(ListaHistorica, ListaOpenClose),
+    FaltanEnHistorico = List.Difference(ListaOpenClose, ListaHistorica)
 in
-    Diferencias
+    [FaltanEnOpenClose = FaltanEnOpenClose, FaltanEnHistorico = FaltanEnHistorico]
