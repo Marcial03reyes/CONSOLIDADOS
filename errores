@@ -1,1 +1,1 @@
-InvalidTemplate. Unable to process template language expressions in action 'Create_raw' inputs at line '0' and column '0': 'The template language function 'formatDateTime' expects its first parameter to be of type string. The provided value is of type 'Null'. Please see https://aka.ms/logicexpressions#formatdatetime for usage details.'.
+if(empty(items('Aplicar_a_cada_uno')?['FechaInicio']), null, formatDateTime(items('Aplicar_a_cada_uno')?['FechaInicio'], 'yyyy-MM-dd'))
