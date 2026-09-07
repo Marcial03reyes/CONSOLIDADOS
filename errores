@@ -1,1 +1,7 @@
-if(empty(items('Aplicar_a_cada_uno')?['FechaInicio']), null, formatDateTime(items('Aplicar_a_cada_uno')?['FechaInicio'], 'yyyy-MM-dd'))
+@and(
+  greaterOrEquals(item()?['Fecha'], '2026-07-01'),
+  or(equals(toLower(item()?['Incidentes']), 'sí'), equals(toLower(item()?['Incidentes']), 'si')),
+  less(
+    ...
+  )
+)
