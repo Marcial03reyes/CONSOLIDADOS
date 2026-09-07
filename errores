@@ -1,14 +1,32 @@
-Flow run failed. Action 'Filter_same_month_register' failed: The execution of template action 'Filter_same_month_register' failed: The evaluation of 'query' action 'where' expression '@and(
+@and(
   greaterOrEquals(item()?['Fecha'], '2026-07-01'),
   less(
-    if(
-      equals(
-        indexOf(createArray('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'), toLower(item()?['Periododereporte'])),
-        -1
-      ),
-      indexOf(createArray('january','february','march','april','may','june','july','august','september','october','november','december'), toLower(item()?['Periododereporte'])),
-      indexOf(createArray('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'), toLower(item()?['Periododereporte']))
-    ),
+    if(equals(toLower(item()?['Periododereporte']), 'enero'), 0,
+    if(equals(toLower(item()?['Periododereporte']), 'january'), 0,
+    if(equals(toLower(item()?['Periododereporte']), 'febrero'), 1,
+    if(equals(toLower(item()?['Periododereporte']), 'february'), 1,
+    if(equals(toLower(item()?['Periododereporte']), 'marzo'), 2,
+    if(equals(toLower(item()?['Periododereporte']), 'march'), 2,
+    if(equals(toLower(item()?['Periododereporte']), 'abril'), 3,
+    if(equals(toLower(item()?['Periododereporte']), 'april'), 3,
+    if(equals(toLower(item()?['Periododereporte']), 'mayo'), 4,
+    if(equals(toLower(item()?['Periododereporte']), 'may'), 4,
+    if(equals(toLower(item()?['Periododereporte']), 'junio'), 5,
+    if(equals(toLower(item()?['Periododereporte']), 'june'), 5,
+    if(equals(toLower(item()?['Periododereporte']), 'julio'), 6,
+    if(equals(toLower(item()?['Periododereporte']), 'july'), 6,
+    if(equals(toLower(item()?['Periododereporte']), 'agosto'), 7,
+    if(equals(toLower(item()?['Periododereporte']), 'august'), 7,
+    if(equals(toLower(item()?['Periododereporte']), 'septiembre'), 8,
+    if(equals(toLower(item()?['Periododereporte']), 'september'), 8,
+    if(equals(toLower(item()?['Periododereporte']), 'octubre'), 9,
+    if(equals(toLower(item()?['Periododereporte']), 'october'), 9,
+    if(equals(toLower(item()?['Periododereporte']), 'noviembre'), 10,
+    if(equals(toLower(item()?['Periododereporte']), 'november'), 10,
+    if(equals(toLower(item()?['Periododereporte']), 'diciembre'), 11,
+    if(equals(toLower(item()?['Periododereporte']), 'december'), 11,
+    -1
+    ))))))))))))))))))))))),
     sub(int(formatDateTime(utcNow(), 'MM')), 1)
   )
-)' failed: 'The template language function 'indexOf' expects its first parameter to be of type string. The provided value is of type 'Array'. Please see https://aka.ms/logicexpressions#indexof for usage details.'.
+)
