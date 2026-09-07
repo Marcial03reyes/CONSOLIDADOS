@@ -1,26 +1,2 @@
-function main(workbook: ExcelScript.Workbook): { data: string[][] } {
-  let sheet = workbook.getWorksheets()[0];
-  let range = sheet.getUsedRange();
-  let values = range.getValues();
-  let headers = values[0] as string[];
 
-  let mapa: { [key: string]: string } = {
-    "Aplicativo afectado o proveedors afectado": "Aplicativo o proveedor afectado",
-    "Descripción de la interrupción": "Descripción",
-    "Plan de acción para la mitigación de la contingencia": "Plan de acción",
-    "Impacto en los procesos": "Impacto en procesos",
-    "Grado de Afectación del equipo": "Afectación del equipo",
-    "Fecha Inicio": "Fecha Inicio",
-    "Fecha Fin": "Fecha Fin",
-    "Hora Inicio": "Hora Inicio",
-    "Hora Fin": "Hora Fin",
-    "Duración": "Duración reportada",
-    "Ticket generado": "Ticket generado"
-    // "N°" no se mapea - no corresponde a ningún campo estándar, se descarta
-  };
-
-  let headersEstandar = headers.map(h => mapa[h.trim()] || h);
-  let resultado = [headersEstandar, ...values.slice(1)];
-
-  return { data: resultado };
-}
+Failed to retrieve dynamic inputs. Error details: 'The dynamic operation request to API 'excelonlinebusiness' operation 'GetSingleScript' failed with status code 'BadRequest'. This may indicate invalid input parameters. Error response: { "status": 400, "message": "No se puede analizar la referencia de script.\r\nclientRequestId: 7f33092f-d3a6-4b5a-a885-2205c7479ac6", "error": { "message": "No se puede analizar la referencia de script." }, "source": "excelonline-bs.azconn-bs-001.p.azurewebsites.net" }'
