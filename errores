@@ -1,2 +1,12 @@
-#"Invocar función personalizada1" = Table.AddColumn(#"Archivos ocultos filtrados1", "Resultado", each try #"Transformar archivo"([Content])),
-Marca_error = Table.AddColumn(#"Invocar función personalizada1", "TieneError", each [Resultado][HasError])
+let
+  Origen = SharePoint.Files("https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/", [ApiVersion = 15]),
+    Solo_excels = Table.SelectRows(Origen, each ([Extension] = ".xls" or [Extension] = ".xlsx")),
+    Solo_reportes_mensual = Table.SelectRows(Solo_excels, each Text.Contains([Folder Path], "8. Reporte de Interrupciones") and Text.Contains([Folder Path], "Mensual") and not Text.Contains([Folder Path], "00. General") and not Text.Contains([Folder Path], "Procesos") and not Text.Contains([Folder Path], "EISO") and not Text.Contains([Folder Path], "Consolidado") and not Text.Contains([Folder Path], "Otros")),
+    Extraer_mes = Table.AddColumn(Solo_reportes_mensual, "Texto entre delimitadores", each Text.BetweenDelimiters([Name], "Reporte SUCAVE - ", ".xlsx"), type text),
+    Extraer_anio = Table.AddColumn(Extraer_mes, "Texto entre delimitadores.1", each Text.BetweenDelimiters([Folder Path], "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/Shared Documents/General/", "/"), type text),
+    #"Filas filtradas" = Table.SelectRows(Extraer_anio, each ([Name] <> "SUCAVE.xlsx")),
+    Correcion_septiembre = Table.ReplaceValue(#"Filas filtradas","Setiembre","Septiembre",Replacer.ReplaceText,{"Texto entre delimitadores"}),
+    #"Archivos ocultos filtrados1" = Table.SelectRows(Correcion_septiembre, each [Attributes]?[Hidden]? <> true),
+    #"Invocar función personalizada1" = #!"Table.AddColumn(#""Archivos ocultos filtrados1"", ""Resultado"", each try #""Transformar archivo""([Content])), Marca_error = Table.AddColumn(#""Invocar función personalizada1"", ""TieneError"", each [Resultado][HasError])"
+in
+    #"Invocar función personalizada1"
