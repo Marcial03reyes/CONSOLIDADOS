@@ -1,7 +1,7 @@
-@and(
-  greaterOrEquals(item()?['Fecha'], '2026-07-01'),
-  or(equals(toLower(item()?['Incidentes']), 'sí'), equals(toLower(item()?['Incidentes']), 'si')),
-  less(
-    ...
+@or(
+  greaterOrEquals(int(items('Apply_to_each_year')?['Name']), 2027),
+  and(
+    equals(int(items('Apply_to_each_year')?['Name']), 2026),
+    greaterOrEquals(int(split(item()?['Name'], '.')?[0]), 7)
   )
 )
