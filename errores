@@ -1,4 +1,14 @@
 @and(
   greaterOrEquals(item()?['FechaInicio'], '2026-07-01'),
-  less(item()?['FechaInicio'], startOfMonth(utcNow()))
+  less(
+    if(
+      equals(
+        indexOf(createArray('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'), toLower(item()?['PeriodoDeReporte'])),
+        -1
+      ),
+      indexOf(createArray('january','february','march','april','may','june','july','august','september','october','november','december'), toLower(item()?['PeriodoDeReporte'])),
+      indexOf(createArray('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'), toLower(item()?['PeriodoDeReporte']))
+    ),
+    sub(int(formatDateTime(utcNow(), 'MM')), 1)
+  )
 )
