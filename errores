@@ -1,7 +1,1 @@
-@or(
-  greaterOrEquals(int(items('Apply_to_each_year')?['Name']), 2027),
-  and(
-    equals(int(items('Apply_to_each_year')?['Name']), 2026),
-    greaterOrEquals(int(split(item()?['Name'], '.')?[0]), 7)
-  )
-)
+Flow run failed. Action 'Filter_since_2026' failed: The execution of template action 'Filter_since_2026' failed: The evaluation of 'query' action 'where' expression '@greaterOrEquals(int(item()?['Name']), 2026)' failed: 'The template language function 'int' was invoked with a parameter that is not valid. The value cannot be converted to the target type.'.
