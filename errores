@@ -7,6 +7,7 @@ let
     #"Filas filtradas" = Table.SelectRows(Extraer_anio, each ([Name] <> "SUCAVE.xlsx")),
     Correcion_septiembre = Table.ReplaceValue(#"Filas filtradas","Setiembre","Septiembre",Replacer.ReplaceText,{"Texto entre delimitadores"}),
     #"Archivos ocultos filtrados1" = Table.SelectRows(Correcion_septiembre, each [Attributes]?[Hidden]? <> true),
-    #"Invocar función personalizada1" = #!"Table.AddColumn(#""Archivos ocultos filtrados1"", ""Resultado"", each try #""Transformar archivo""([Content])), Marca_error = Table.AddColumn(#""Invocar función personalizada1"", ""TieneError"", each [Resultado][HasError])"
+    #"Invocar función personalizada1" = Table.AddColumn(#"Archivos ocultos filtrados1", "Resultado", each try #"Transformar archivo"([Content])),
+    Marca_error = Table.AddColumn(#"Invocar función personalizada1", "TieneError", each [Resultado][HasError])
 in
-    #"Invocar función personalizada1"
+    Marca_error
