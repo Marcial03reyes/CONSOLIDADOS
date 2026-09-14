@@ -1,7 +1,2 @@
-if(empty(items('Apply_to_each')?['Fecha Inicio']), null, formatDateTime(addDays('1899-12-30', int(float(items('Apply_to_each')?['Fecha Inicio']))), 'yyyy-MM-dd'))
-
-if(empty(items('Apply_to_each')?['Fecha Fin']), null, formatDateTime(addDays('1899-12-30', int(float(items('Apply_to_each')?['Fecha Fin']))), 'yyyy-MM-dd'))
-
-if(empty(items('Apply_to_each')?['Hora Inicio']), null, formatDateTime(addSeconds('00:00:00', int(mul(float(items('Apply_to_each')?['Hora Inicio']), 86400))), 'HH:mm'))
-
-if(empty(items('Apply_to_each')?['Hora Fin']), null, formatDateTime(addSeconds('00:00:00', int(mul(float(items('Apply_to_each')?['Hora Fin']), 86400))), 'HH:mm'))
+if(empty(items('Apply_to_each')?['Hora Inicio']), null, concat(formatNumber(div(int(mul(float(items('Apply_to_each')?['Hora Inicio']), 1440)), 60), '00'), ':', formatNumber(mod(int(mul(float(items('Apply_to_each')?['Hora Inicio']), 1440)), 60), '00')))
+if(empty(items('Apply_to_each')?['Hora Fin']), null, concat(formatNumber(div(int(mul(float(items('Apply_to_each')?['Hora Fin']), 1440)), 60), '00'), ':', formatNumber(mod(int(mul(float(items('Apply_to_each')?['Hora Fin']), 1440)), 60), '00')))
