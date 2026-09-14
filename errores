@@ -1,3 +1,7 @@
-if(empty(items('TuBucle')?['HoraInicio']), null, formatDateTime(addSeconds('00:00:00', mul(float(items('TuBucle')?['HoraInicio']), 86400)), 'HH:mm'))
+if(empty(items('Apply_to_each')?['Fecha Inicio']), null, formatDateTime(addDays('1899-12-30', int(float(items('Apply_to_each')?['Fecha Inicio']))), 'yyyy-MM-dd'))
 
-formatDateTime(addDays('1899-12-30', int(float(items('TuBucle')?['FechaInicio']))), 'yyyy-MM-dd')
+if(empty(items('Apply_to_each')?['Fecha Fin']), null, formatDateTime(addDays('1899-12-30', int(float(items('Apply_to_each')?['Fecha Fin']))), 'yyyy-MM-dd'))
+
+if(empty(items('Apply_to_each')?['Hora Inicio']), null, formatDateTime(addSeconds('00:00:00', int(mul(float(items('Apply_to_each')?['Hora Inicio']), 86400))), 'HH:mm'))
+
+if(empty(items('Apply_to_each')?['Hora Fin']), null, formatDateTime(addSeconds('00:00:00', int(mul(float(items('Apply_to_each')?['Hora Fin']), 86400))), 'HH:mm'))
