@@ -1,1 +1,5 @@
-IDOrigen = Text.From(Text.Length([Área])) & Text.Start([Área], 3) & "-" & Text.From([Fecha Inicio]) & "-" & Text.From([Hora Inicio])
+let
+    Agrupado = Table.Group(TuTablaConIDOrigen, {"IDOrigen"}, {{"Conteo", each Table.RowCount(_), Int64.Type}}),
+    SoloDuplicados = Table.SelectRows(Agrupado, each [Conteo] > 1)
+in
+    SoloDuplicados
