@@ -1,1 +1,1 @@
-IDOrigen eq '@{items('Apply_to_each')?['IDOrigen]}'
+IDOrigen eq '@{items('Apply_to_each')?['IDOrigen']}'
