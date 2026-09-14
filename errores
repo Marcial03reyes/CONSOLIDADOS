@@ -1,1 +1,3 @@
-Flow save failed with code 'InvalidTemplate' and message 'The template validation failed: 'The repetition action(s) 'Aplicar_a_cada_uno' referenced by 'inputs' in action 'Create_item' are not defined in the template.'.'.
+if(empty(items('TuBucle')?['HoraInicio']), null, formatDateTime(addSeconds('00:00:00', mul(float(items('TuBucle')?['HoraInicio']), 86400)), 'HH:mm'))
+
+formatDateTime(addDays('1899-12-30', int(float(items('TuBucle')?['FechaInicio']))), 'yyyy-MM-dd')
