@@ -1,5 +1,1 @@
-let
-    Agrupado = Table.Group(TuTablaConIDOrigen, {"IDOrigen"}, {{"Conteo", each Table.RowCount(_), Int64.Type}}),
-    SoloDuplicados = Table.SelectRows(Agrupado, each [Conteo] > 1)
-in
-    SoloDuplicados
+IDOrigen eq '@{items('Apply_to_each')?['IDOrigen]}'
