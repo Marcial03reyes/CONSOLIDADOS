@@ -1,1 +1,3 @@
-IDOrigen eq '@{items('Apply_to_each')?['IDOrigen']}'
+if(empty(items('Aplicar_a_cada_uno')?['FechaInicio']), null, formatDateTime(addDays('1899-12-30', int(items('Aplicar_a_cada_uno')?['FechaInicio'])), 'yyyy-MM-dd'))
+
+formatDateTime(addSeconds('00:00:00', mul(items('Aplicar_a_cada_uno')?['HoraInicio'], 86400)), 'HH:mm')
