@@ -1,26 +1,17 @@
-function main(workbook: ExcelScript.Workbook): { data: string[][] } {
-  let sheet = workbook.getWorksheets()[0];
-  let range = sheet.getUsedRange();
-  let values = range.getValues();
-  let headers = values[0] as string[];
-
-  let mapa: { [key: string]: string } = {
-    "Aplicativo afectado o proveedors afectado": "Aplicativo o proveedor afectado",
-    "Descripción de la interrupción": "Descripción",
-    "Plan de acción para la mitigación de la contingencia": "Plan de acción",
-    "Impacto en los procesos": "Impacto en procesos",
-    "Grado de Afectación del equipo": "Afectación del equipo",
-    "Fecha Inicio": "Fecha Inicio",
-    "Fecha Fin": "Fecha Fin",
-    "Hora Inicio": "Hora Inicio",
-    "Hora Fin": "Hora Fin",
-    "Duración": "Duración reportada",
-    "Ticket generado": "Ticket generado"
-    // "N°" no se mapea - no corresponde a ningún campo estándar, se descarta
-  };
-
-  let headersEstandar = headers.map(h => mapa[h.trim()] || h);
-  let resultado = [headersEstandar, ...values.slice(1)];
-
-  return { data: resultado };
-}
+let
+  Origen = SharePoint.Files("https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocios266", [ApiVersion = 15]),
+    #"Filas filtradas" = Table.SelectRows(Origen, each ([Extension] = ".XLS" or [Extension] = ".xls" or [Extension] = ".xlsm" or [Extension] = ".XLSX" or [Extension] = ".xlsx")),
+    #"Filas filtradas1" = Table.SelectRows(#"Filas filtradas", each Text.Contains([Folder Path], "04. 2026") and Text.Contains([Folder Path], "Reporte de Interrupciones")),
+    #"Filas filtradas2" = Table.SelectRows(#"Filas filtradas1", each true),
+    #"Filas filtradas3" = Table.SelectRows(#"Filas filtradas2", each not Text.Contains([Name], "Circular") and not Text.Contains([Name], "Casos") and not Text.Contains([Name], "Riesgo") and not Text.Contains([Name], "Bitacora")),
+    #"Columnas quitadas" = Table.RemoveColumns(#"Filas filtradas3",{"Extension", "Date accessed", "Date modified", "Date created"}),
+    #"Texto insertado entre delimitadores" = Table.AddColumn(#"Columnas quitadas", "Texto entre delimitadores", each Text.BetweenDelimiters([Folder Path], "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocios266/Shared Documents/Áreas/", "/"), type text),
+    #"Columnas reordenadas" = Table.ReorderColumns(#"Texto insertado entre delimitadores",{"Content", "Texto entre delimitadores", "Name", "Folder Path", "Attributes"}),
+    #"Filas filtradas4" = Table.SelectRows(#"Columnas reordenadas", each ([Name] <> "2.-Sustento-Reporte_Abr.xlsx" and [Name] <> "2.-Sustento-Reporte_Ago.xlsx" and [Name] <> "2.-Sustento-Reporte_Ene.xlsx" and [Name] <> "2.-Sustento-Reporte_Feb.xlsx" and [Name] <> "2.-Sustento-Reporte_Jul.xlsx" and [Name] <> "2.-Sustento-Reporte_Jun.xlsx" and [Name] <> "2.-Sustento-Reporte_Mar.xlsx" and [Name] <> "2.-Sustento-Reporte_May.xlsx" and [Name] <> "Sustento Reporte Resolución SBS Nº 877-2020 - Enero 2026.xlsx" and [Name] <> "Sustento Reporte Resolución SBS Nº 877-2020 - Febrero 2026.xlsx")),
+    #"Texto insertado entre delimitadores1" = Table.AddColumn(#"Filas filtradas4", "Texto entre delimitadores.1", each Text.BetweenDelimiters([Folder Path], "03. Reporte de Interrupciones/", "/"), type text),
+    #"Filas filtradas5" = Table.SelectRows(#"Texto insertado entre delimitadores1", each ([Texto entre delimitadores.1] <> "10. Octubre" and [Texto entre delimitadores.1] <> "11. Noviembre" and [Texto entre delimitadores.1] <> "12. Diciembre")),
+    #"Columnas reordenadas1" = Table.ReorderColumns(#"Filas filtradas5",{"Content", "Texto entre delimitadores.1", "Texto entre delimitadores", "Name", "Folder Path", "Attributes"}),
+    #"Columnas quitadas1" = Table.RemoveColumns(#"Columnas reordenadas1",{"Content"}),
+    #"Filas filtradas6" = Table.SelectRows(#"Columnas quitadas1", each ([Texto entre delimitadores.1] = "07. Julio" or [Texto entre delimitadores.1] = "08. Agosto" or [Texto entre delimitadores.1] = "09. Setiembre"))
+in
+    #"Filas filtradas6"
