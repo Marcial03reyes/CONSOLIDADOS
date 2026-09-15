@@ -1,1 +1,4 @@
-if(or(empty(items('Apply_to_each')?['Hora Inicio']), equals(items('Apply_to_each')?['Hora Inicio'], '')), null, concat(formatNumber(div(int(mul(float(items('Apply_to_each')?['Hora Inicio']), 1440)), 60), '00'), ':', formatNumber(mod(int(mul(float(items('Apply_to_each')?['Hora Inicio']), 1440)), 60), '00')))
+items('Apply_to_each')?['Fecha Inicio']
+items('Apply_to_each')?['Fecha Fin']
+items('Apply_to_each')?['Hora Inicio']
+items('Apply_to_each')?['Hora Fin']
