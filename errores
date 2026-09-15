@@ -37,15 +37,39 @@ let
     ),
 
     Reordenar_columnas_finales = Table.ReorderColumns(Filtrar_desde_julio_2026, {"Área", "AnioCarpeta", "NumeroMes", "CarpetaMes", "Name", "Folder Path", "Attributes"}),
+
     #"Archivos ocultos filtrados1" = Table.SelectRows(Reordenar_columnas_finales, each [Attributes]?[Hidden]? <> true),
+
     #"Invocar función personalizada1" = Table.AddColumn(#"Archivos ocultos filtrados1", "Transformar archivo", each #"Transformar archivo"([Content])),
+
     #"Otras columnas quitadas1" = Table.SelectColumns(#"Invocar función personalizada1",{"Área", "AnioCarpeta", "NumeroMes", "Transformar archivo"}),
+
     #"Columna de tabla expandida1" = Table.ExpandTableColumn(#"Otras columnas quitadas1", "Transformar archivo", Table.ColumnNames(#"Transformar archivo"(#"Archivo de ejemplo"))),
+
     Reemplazar_guion_null = Table.ReplaceValue(#"Columna de tabla expandida1","-",null,Replacer.ReplaceValue,{"Hora Inicio", "Hora Fin", "Duración"}),
+
     #"Tipo cambiado" = Table.TransformColumnTypes(Reemplazar_guion_null,{{"N°", Int64.Type}, {"Aplicativo afectado o proveedors afectado", type text}, {"Descripción de la interrupción", type text}, {"Plan de acción para la mitigación de la contingencia", type text}, {"Impacto en los procesos", type any}, {"Grado de Afectación del equipo", type any}, {"Fecha Inicio", type date}, {"Fecha Fin", type date}, {"Hora Inicio", type time}, {"Hora Fin", type time}, {"Duración", type any}, {"Ticket generado", type text}}),
-    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"N°"}),
+
+    Formato_fecha_texto = Table.TransformColumns(#"Tipo cambiado", {
+        {"Fecha Inicio", each try Date.ToText(_, "yyyy-MM-dd") otherwise null, type text},
+        {"Fecha Fin", each try Date.ToText(_, "yyyy-MM-dd") otherwise null, type text}
+    }),
+
+    Formato_hora_texto = Table.TransformColumns(Formato_fecha_texto, {
+        {"Hora Inicio", each try Time.ToText(_, "HH:mm") otherwise null, type text},
+        {"Hora Fin", each try Time.ToText(_, "HH:mm") otherwise null, type text}
+    }),
+
+    #"Columnas quitadas" = Table.RemoveColumns(Formato_hora_texto,{"N°"}),
+
     #"Columnas reordenadas" = Table.ReorderColumns(#"Columnas quitadas",{"AnioCarpeta", "NumeroMes", "Área", "Aplicativo afectado o proveedors afectado", "Descripción de la interrupción", "Plan de acción para la mitigación de la contingencia", "Impacto en los procesos", "Grado de Afectación del equipo", "Fecha Inicio", "Fecha Fin", "Hora Inicio", "Hora Fin", "Duración", "Ticket generado"}),
+
     #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas reordenadas",{{"Aplicativo afectado o proveedors afectado", "Aplicativo o proveedor afectado"}, {"Descripción de la interrupción", "Descripción"}, {"Plan de acción para la mitigación de la contingencia", "Plan de acción"}, {"Impacto en los procesos", "Impacto en procesos"}, {"Duración", "Duración reportada"}}),
-    #"Personalizada agregada" = Table.AddColumn(#"Columnas con nombre cambiado", "IDOrigen", each Text.From(Text.Length([Área])) & Text.Start([Área], 3) & "-" & Text.From([Fecha Inicio]) & "-" & Text.From([Hora Inicio]))
+
+    Agregar_indice = Table.AddIndexColumn(#"Columnas con nombre cambiado", "IndiceFila", 0, 1, Int64.Type),
+
+    #"Personalizada agregada" = Table.AddColumn(Agregar_indice, "IDOrigen", each 
+        Text.From(Text.Length([Área])) & Text.Start([Área], 3) & "-" & Text.From([NumeroMes]) & "-" & Text.From([AnioCarpeta]) & "-" & Text.From([IndiceFila])
+    )
 in
     #"Personalizada agregada"
