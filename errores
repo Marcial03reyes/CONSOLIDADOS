@@ -1,19 +1,17 @@
 if(
-  or(empty(items('Apply_to_each')?['Fecha Inicio']), empty(items('Apply_to_each')?['Hora Inicio'])),
+  or(empty(items('Apply_to_each')?['Fecha Inicio']), empty(items('Apply_to_each')?['Hora Inicio']), empty(items('Apply_to_each')?['Fecha Fin']), empty(items('Apply_to_each')?['Hora Fin'])),
   null,
-  max(
-    ticks(concat(items('Apply_to_each')?['Fecha Inicio'], 'T', items('Apply_to_each')?['Hora Inicio'], ':00')),
-    ticks(concat(items('Apply_to_each')?['Fecha Inicio'], 'T', first(outputs('Get_matriz')?['body/value'])?['Open'], ':00'))
+  if(
+    less(outputs('Fin_Real'), outputs('Inicio_Real')),
+    0,
+    div(sub(outputs('Fin_Real'), outputs('Inicio_Real')), 600000000)
   )
 )
 
 if(
-  or(empty(items('Apply_to_each')?['Fecha Fin']), empty(items('Apply_to_each')?['Hora Fin'])),
+  or(empty(items('Apply_to_each')?['ER']), equals(items('Apply_to_each')?['ER'], 0)),
   null,
-  min(
-    ticks(concat(items('Apply_to_each')?['Fecha Fin'], 'T', items('Apply_to_each')?['Hora Fin'], ':00')),
-    ticks(concat(items('Apply_to_each')?['Fecha Fin'], 'T', first(outputs('Get_matriz')?['body/value'])?['Close'], ':00'))
-  )
+  mul(div(float(items('Apply_to_each')?['Afectación del equipo']), float(items('Apply_to_each')?['ER'])), 100)
 )
 
 if(
