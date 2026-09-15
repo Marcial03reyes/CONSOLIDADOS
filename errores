@@ -1,1 +1,31 @@
-InvalidTemplate. Unable to process template language expressions in action 'Inicio_Real' inputs at line '0' and column '0': 'In function 'ticks', the value provided for date time string 'T:00' was not valid. The datetime string must match ISO 8601 format.'.
+if(
+  or(empty(items('Apply_to_each')?['Fecha Inicio']), empty(items('Apply_to_each')?['Hora Inicio'])),
+  null,
+  max(
+    ticks(concat(items('Apply_to_each')?['Fecha Inicio'], 'T', items('Apply_to_each')?['Hora Inicio'], ':00')),
+    ticks(concat(items('Apply_to_each')?['Fecha Inicio'], 'T', first(outputs('Get_matriz')?['body/value'])?['Open'], ':00'))
+  )
+)
+
+if(
+  or(empty(items('Apply_to_each')?['Fecha Fin']), empty(items('Apply_to_each')?['Hora Fin'])),
+  null,
+  min(
+    ticks(concat(items('Apply_to_each')?['Fecha Fin'], 'T', items('Apply_to_each')?['Hora Fin'], ':00')),
+    ticks(concat(items('Apply_to_each')?['Fecha Fin'], 'T', first(outputs('Get_matriz')?['body/value'])?['Close'], ':00'))
+  )
+)
+
+if(
+  empty(outputs('DuracionRealMinutos')),
+  json('{"Estado":"","Motivo":""}'),
+  if(
+    less(outputs('DuracionRealMinutos'), 30),
+    json('{"Estado":"No aplica","Motivo":"< 30 mins"}'),
+    if(
+      less(outputs('PorcentajeAfectacion'), 50),
+      json('{"Estado":"No aplica","Motivo":"<50% de afectación del equipo"}'),
+      json('{"Estado":"Aplica","Motivo":""}')
+    )
+  )
+)
