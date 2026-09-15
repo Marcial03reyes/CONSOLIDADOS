@@ -1,5 +1,1 @@
-consolidado final: https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/Lists/Interrupciones_raw/AllItems.aspx
-
-pre consolidado: https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/Lists/Interrupciones_Consolidado/AllItems.aspx
-
-consolidado donde reportan las areas: https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocios266/Lists/Incidentes 2024/AllItems.aspx
+InvalidTemplate. Unable to process template language expressions in action 'Estado_y_motivo' inputs at line '0' and column '0': 'The template language function 'empty' expects its parameter to be an object, an array or a string. The provided value is of type 'Integer'. Please see https://aka.ms/logicexpressions#empty for usage details.'.
