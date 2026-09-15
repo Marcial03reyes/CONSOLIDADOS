@@ -14,4 +14,4 @@ if(
   div(sub(outputs('FinReal'), outputs('InicioReal')), 600000000)
 )
 
-Title eq '@{items('Apply_to_each')?[Área]}'
+Title eq 'items('Apply_to_each')?['Área']'
