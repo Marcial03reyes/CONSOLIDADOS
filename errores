@@ -1,29 +1,263 @@
-if(
-  or(empty(items('Apply_to_each')?['Fecha Inicio']), empty(items('Apply_to_each')?['Hora Inicio']), empty(items('Apply_to_each')?['Fecha Fin']), empty(items('Apply_to_each')?['Hora Fin'])),
-  null,
-  if(
-    less(outputs('Fin_Real'), outputs('Inicio_Real')),
-    0,
-    div(sub(outputs('Fin_Real'), outputs('Inicio_Real')), 600000000)
-  )
-)
-
-if(
-  or(empty(items('Apply_to_each')?['ER']), equals(items('Apply_to_each')?['ER'], 0)),
-  null,
-  mul(div(float(items('Apply_to_each')?['Afectación del equipo']), float(items('Apply_to_each')?['ER'])), 100)
-)
-
-if(
-  empty(outputs('DuracionRealMinutos')),
-  json('{"Estado":"","Motivo":""}'),
-  if(
-    less(outputs('DuracionRealMinutos'), 30),
-    json('{"Estado":"No aplica","Motivo":"< 30 mins"}'),
-    if(
-      less(outputs('PorcentajeAfectacion'), 50),
-      json('{"Estado":"No aplica","Motivo":"<50% de afectación del equipo"}'),
-      json('{"Estado":"Aplica","Motivo":""}')
-    )
-  )
-)
+{
+    "statusCode": 200,
+    "headers": {
+        "Cache-Control": "max-age=0, private",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Origin,Accept-Encoding",
+        "X-FD-RouteKey": "pacificocia",
+        "X-NetworkStatistics": "0,262140,342,685,4650442,4819694,4819694,115116",
+        "X-MSEdge-Ref": "MIRA: dd2c9191-3bf9-ffde-5434-eef327cba0cf CP9P284CA0002 2026-09-15T03:55:04.235Z",
+        "X-1DSCollectorUrl": "https://mobile.events.data.microsoft.com/OneCollector/1.0/",
+        "IsOCDI": "0",
+        "Request-Id": "dd2c9191-3bf9-ffde-5434-eef327cba0cf",
+        "DATASERVICEVERSION": "3.0",
+        "X-NanoProxy": "1",
+        "SPRequestGuid": "fd13dbbb-5e65-48e8-96b4-70769a60863e",
+        "X-FD-RouteKeyApplicationEndpointList": "17888-IPV4V6.CLUMP.DPRODMGD105.AA-RT.SHAREPOINT.COM",
+        "Content-Security-Policy": "frame-ancestors 'self' teams.microsoft.com *.teams.microsoft.com *.skype.com *.teams.microsoft.us local.teams.office.com teams.cloud.microsoft *.office365.com goals.cloud.microsoft *.powerapps.com *.powerbi.com *.yammer.com engage.cloud.microsoft word.cloud.microsoft excel.cloud.microsoft powerpoint.cloud.microsoft *.officeapps.live.com *.office.com *.microsoft365.com m365.cloud.microsoft *.cloud.microsoft *.stream.azure-test.net *.dynamics.com *.microsoft.com onedrive.live.com *.onedrive.live.com teams.microsoft.com *.teams.microsoft.com securebroker.sharepointonline.com;",
+        "MicrosoftSharePointTeamServices": "16.0.0.27626",
+        "MS-CV": "ojtWES3gAPB3AYzzzTlMEg.0",
+        "X-FEServer": "CP9P284CA0002",
+        "X-MS-SPConnector": "1",
+        "SPClientServiceRequestDuration": "77",
+        "SPLogId": "11563ba2-e02d-f000-7701-8cf3cd394c12",
+        "X-AriaCollectorURL": "https://browser.pipe.aria.microsoft.com/Collector/3.0/",
+        "X-SP-SERVERSTATE": "ReadOnly=0",
+        "X-DataBoundary": "NONE",
+        "X-BackEndHttpStatus": "200",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-MS-InvokeApp": "1; RequireReadOnly",
+        "X-Proxy-BackendServerStatus": "200",
+        "X-Proxy-RoutingCorrectness": "1",
+        "X-SharePointHealthScore": "1",
+        "X-FirstHopCafeEFZ": "CPQ",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "P3P": "CP=\"ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI\"",
+        "X-AspNet-Version": "4.0.30319",
+        "x-ms-environment-id": "default-66dc1f77-2e0d-4d13-b961-7c2e63aa376b",
+        "x-ms-tenant-id": "66dc1f77-2e0d-4d13-b961-7c2e63aa376b",
+        "x-ms-subscription-id": "Default-66dc1f77-2e0d-4d13-b961-7c2e63aa376b",
+        "x-ms-dlp-re": "sharepointonline|False|2026-09-14T18:10:04.7748053+00:00",
+        "x-ms-dlp-gu": "-|-",
+        "x-ms-dlp-ef": "-|-/-|-|-|-|-",
+        "x-ms-mip-sl": "-|-|-|-",
+        "x-ms-au-creator-id": "35af7165-1b16-4da8-b4ce-ce0834dc964d",
+        "x-ms-plex-worker-metadata": "sharepointonline/bucket:3",
+        "Timing-Allow-Origin": "*",
+        "x-ms-apihub-cached-response": "false",
+        "x-ms-apihub-obo": "false",
+        "Date": "Tue, 15 Sep 2026 03:55:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Expires": "Mon, 31 Aug 2026 03:55:04 GMT",
+        "Last-Modified": "Tue, 15 Sep 2026 03:55:04 GMT",
+        "Content-Length": "8324"
+    },
+    "body": {
+        "@odata.nextLink": "https://default-66dc1f77-2e0d-4d13-b961-7c2e63aa376b.14.common.brazil.azure-apihub.net/apim/sharepointonline/6f5ffd4614244a5799d90c4d0cf75f70/datasets/https%253A%252F%252Fpacificocia.sharepoint.com%252Fsites%252FContinuidaddeNegocio/tables/c54d4a7e-f887-48fe-a8fa-db01408e25f6/items?$filter=Procesado+eq+false&$top=3&$skiptoken=Paged%3dTRUE%26p_ID%3d295%26RootFolder%3d%252fsites%252fContinuidaddeNegocio%252fLists%252fInterrupciones%255fConsolidado",
+        "value": [
+            {
+                "@odata.etag": "\"1\"",
+                "ItemInternalId": "293",
+                "ID": 293,
+                "OData__x00c1_rea": "Gestión de Pólizas Vehiculares BS&AL",
+                "Aplicativo": "NO BRINDA RESPUESTA",
+                "Plandeacci_x00f3_n": "Priorizar la atención de otros procesos",
+                "Impactoenprocesos": "EMISION",
+                "Afectaci_x00f3_ndelequipo": "1",
+                "Ticketgenerado": "INC0942457",
+                "FechaInicio": "2026-07-03",
+                "HoraInicio": "17:45",
+                "FechaFin": "2026-07-06",
+                "HoraFin": "11:08",
+                "Duraci_x00f3_nreportada": "248.749999995343",
+                "Origen": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                    "Id": 1,
+                    "Value": "EXCEL"
+                },
+                "Origen#Id": 1,
+                "IDOrigen": "36Ges-7-2026-19",
+                "FechaCarga": "2026-09-15",
+                "Procesado": false,
+                "Modified": "2026-09-15T00:29:16Z",
+                "Created": "2026-09-15T00:29:16Z",
+                "Author": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    "Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                    "DisplayName": "Marcial Homero Reyes Robles",
+                    "Email": "marcialreyesr@pacifico.com.pe",
+                    "Picture": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/UserPhoto.aspx?Size=L&AccountName=marcialreyesr@pacifico.com.pe",
+                    "Department": "CONTINUIDAD OPERATIVA",
+                    "JobTitle": "PRACTICANTE"
+                },
+                "Author#Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                "Editor": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    "Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                    "DisplayName": "Marcial Homero Reyes Robles",
+                    "Email": "marcialreyesr@pacifico.com.pe",
+                    "Picture": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/UserPhoto.aspx?Size=L&AccountName=marcialreyesr@pacifico.com.pe",
+                    "Department": "CONTINUIDAD OPERATIVA",
+                    "JobTitle": "PRACTICANTE"
+                },
+                "Editor#Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                "{Identifier}": "Lists%252fInterrupciones_Consolidado%252f293_.000",
+                "{IsFolder}": false,
+                "{Thumbnail}": {
+                    "Large": null,
+                    "Medium": null,
+                    "Small": null
+                },
+                "{Link}": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/listform.aspx?PageType=4&ListId=c54d4a7e%2Df887%2D48fe%2Da8fa%2Ddb01408e25f6&ID=293&ContentTypeID=0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                "{Name}": "",
+                "{FilenameWithExtension}": "",
+                "{Path}": "Lists/Interrupciones_Consolidado/",
+                "{FullPath}": "Lists/Interrupciones_Consolidado/293_.000",
+                "{ContentType}": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType",
+                    "Id": "0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                    "Name": "Item"
+                },
+                "{ContentType}#Id": "0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                "{HasAttachments}": false,
+                "{VersionNumber}": "1.0"
+            },
+            {
+                "@odata.etag": "\"1\"",
+                "ItemInternalId": "294",
+                "ID": 294,
+                "OData__x00c1_rea": "Gestión de Pólizas Vehiculares BS&AL",
+                "Aplicativo": "NO GENERA PDF \"NO EXISTE REPORTE A IMPRIMIR\"",
+                "Plandeacci_x00f3_n": "Priorizar la atención de otros procesos",
+                "Impactoenprocesos": "EMISION",
+                "Afectaci_x00f3_ndelequipo": "1",
+                "Ticketgenerado": "INC0942170",
+                "FechaInicio": "2026-07-02",
+                "HoraInicio": "15:48",
+                "FechaFin": "2026-07-06",
+                "HoraFin": "14:37",
+                "Duraci_x00f3_nreportada": "1129.16666666279",
+                "Origen": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                    "Id": 1,
+                    "Value": "EXCEL"
+                },
+                "Origen#Id": 1,
+                "IDOrigen": "36Ges-7-2026-17",
+                "FechaCarga": "2026-09-15",
+                "Procesado": false,
+                "Modified": "2026-09-15T00:29:16Z",
+                "Created": "2026-09-15T00:29:16Z",
+                "Author": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    "Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                    "DisplayName": "Marcial Homero Reyes Robles",
+                    "Email": "marcialreyesr@pacifico.com.pe",
+                    "Picture": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/UserPhoto.aspx?Size=L&AccountName=marcialreyesr@pacifico.com.pe",
+                    "Department": "CONTINUIDAD OPERATIVA",
+                    "JobTitle": "PRACTICANTE"
+                },
+                "Author#Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                "Editor": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    "Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                    "DisplayName": "Marcial Homero Reyes Robles",
+                    "Email": "marcialreyesr@pacifico.com.pe",
+                    "Picture": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/UserPhoto.aspx?Size=L&AccountName=marcialreyesr@pacifico.com.pe",
+                    "Department": "CONTINUIDAD OPERATIVA",
+                    "JobTitle": "PRACTICANTE"
+                },
+                "Editor#Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                "{Identifier}": "Lists%252fInterrupciones_Consolidado%252f294_.000",
+                "{IsFolder}": false,
+                "{Thumbnail}": {
+                    "Large": null,
+                    "Medium": null,
+                    "Small": null
+                },
+                "{Link}": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/listform.aspx?PageType=4&ListId=c54d4a7e%2Df887%2D48fe%2Da8fa%2Ddb01408e25f6&ID=294&ContentTypeID=0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                "{Name}": "",
+                "{FilenameWithExtension}": "",
+                "{Path}": "Lists/Interrupciones_Consolidado/",
+                "{FullPath}": "Lists/Interrupciones_Consolidado/294_.000",
+                "{ContentType}": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType",
+                    "Id": "0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                    "Name": "Item"
+                },
+                "{ContentType}#Id": "0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                "{HasAttachments}": false,
+                "{VersionNumber}": "1.0"
+            },
+            {
+                "@odata.etag": "\"1\"",
+                "ItemInternalId": "295",
+                "ID": 295,
+                "OData__x00c1_rea": "Gestión de Pólizas Vehiculares BS&AL",
+                "Aplicativo": "RENOVACION",
+                "Plandeacci_x00f3_n": "Priorizar la atención de otros procesos",
+                "Impactoenprocesos": "ERROR EN SUMA ASEGURADA DE COBERTURA RC",
+                "Afectaci_x00f3_ndelequipo": "1",
+                "Ticketgenerado": "INC0941748",
+                "FechaInicio": "2026-07-01",
+                "HoraInicio": "09:54",
+                "FechaFin": "2026-07-06",
+                "HoraFin": "16:35",
+                "Duraci_x00f3_nreportada": "2200.61666666879",
+                "Origen": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                    "Id": 1,
+                    "Value": "EXCEL"
+                },
+                "Origen#Id": 1,
+                "IDOrigen": "36Ges-7-2026-9",
+                "FechaCarga": "2026-09-15",
+                "Procesado": false,
+                "Modified": "2026-09-15T00:29:16Z",
+                "Created": "2026-09-15T00:29:16Z",
+                "Author": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    "Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                    "DisplayName": "Marcial Homero Reyes Robles",
+                    "Email": "marcialreyesr@pacifico.com.pe",
+                    "Picture": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/UserPhoto.aspx?Size=L&AccountName=marcialreyesr@pacifico.com.pe",
+                    "Department": "CONTINUIDAD OPERATIVA",
+                    "JobTitle": "PRACTICANTE"
+                },
+                "Author#Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                "Editor": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    "Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                    "DisplayName": "Marcial Homero Reyes Robles",
+                    "Email": "marcialreyesr@pacifico.com.pe",
+                    "Picture": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/UserPhoto.aspx?Size=L&AccountName=marcialreyesr@pacifico.com.pe",
+                    "Department": "CONTINUIDAD OPERATIVA",
+                    "JobTitle": "PRACTICANTE"
+                },
+                "Editor#Claims": "i:0#.f|membership|marcialreyesr@pacifico.com.pe",
+                "{Identifier}": "Lists%252fInterrupciones_Consolidado%252f295_.000",
+                "{IsFolder}": false,
+                "{Thumbnail}": {
+                    "Large": null,
+                    "Medium": null,
+                    "Small": null
+                },
+                "{Link}": "https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio/_layouts/15/listform.aspx?PageType=4&ListId=c54d4a7e%2Df887%2D48fe%2Da8fa%2Ddb01408e25f6&ID=295&ContentTypeID=0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                "{Name}": "",
+                "{FilenameWithExtension}": "",
+                "{Path}": "Lists/Interrupciones_Consolidado/",
+                "{FullPath}": "Lists/Interrupciones_Consolidado/295_.000",
+                "{ContentType}": {
+                    "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType",
+                    "Id": "0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                    "Name": "Item"
+                },
+                "{ContentType}#Id": "0x010028437905B629874FAF39696DD333A41E0010A9D3AA9FD7FB48B30C528C0E666320",
+                "{HasAttachments}": false,
+                "{VersionNumber}": "1.0"
+            }
+        ]
+    }
+}
