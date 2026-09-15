@@ -1,6 +1,1 @@
-📋 Se detectó un archivo nuevo/modificado en la carpeta de Reporte de Interrupciones.
-
-Archivo: [contenido dinámico: Nombre de archivo con extensión]
-Ruta: [contenido dinámico: Ruta de acceso a la carpeta]
-
-Verifica que tenga formato de Tabla antes de la próxima consolidación.
+OpenApiOperationParameterValidationFailed. The 'inputs.parameters' of workflow operation 'Create_raw' of type 'OpenApiConnection' is not valid. Error details: The API operation 'PostItem' requires the property 'item/Plandeacci_x00f3_n' to be a string of maximum length '255' but is of length '287'.
