@@ -1,17 +1,1 @@
-if(
-  equals(outputs('DuracionRealMinutos'), null),
-  json('{"Estado":"","Motivo":""}'),
-  if(
-    less(outputs('DuracionRealMinutos'), 30),
-    json('{"Estado":"No aplica","Motivo":"< 30 mins"}'),
-    if(
-      equals(outputs('PorcentajeAfectacion'), null),
-      json('{"Estado":"","Motivo":""}'),
-      if(
-        less(outputs('PorcentajeAfectacion'), 50),
-        json('{"Estado":"No aplica","Motivo":"<50% de afectación del equipo"}'),
-        json('{"Estado":"Aplica","Motivo":""}')
-      )
-    )
-  )
-)
+Flow run failed. Action 'Create_item' failed: The passed-in field "ID_Origen" could not be found clientRequestId: a81112ff-9e00-4c9c-980f-766ffe2e3894 serviceRequestId: 9a593ba2-0048-f000-2950-7b80b9cdc2db
