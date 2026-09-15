@@ -1,13 +1,1 @@
-if(
-  equals(outputs('DuracionRealMinutos'), null),
-  json('{"Estado":"","Motivo":""}'),
-  if(
-    less(outputs('DuracionRealMinutos'), 30),
-    json('{"Estado":"No aplica","Motivo":"< 30 mins"}'),
-    if(
-      less(outputs('PorcentajeAfectacion'), 50),
-      json('{"Estado":"No aplica","Motivo":"<50% de afectación del equipo"}'),
-      json('{"Estado":"Aplica","Motivo":""}')
-    )
-  )
-)
+InvalidTemplate. Unable to process template language expressions in action 'Estado_y_motivo' inputs at line '0' and column '0': 'The template language function 'less' expects all of its parameters to be either integer or decimal numbers. Found invalid parameter types: 'Null'.'.
