@@ -1,1 +1,15 @@
-OpenApiOperationParameterValidationFailed. The 'inputs.parameters' of workflow operation 'Create_raw' of type 'OpenApiConnection' is not valid. Error details: The API operation 'PostItem' requires the property 'item/Plandeacci_x00f3_n' to be a string of maximum length '255' but is of length '287'.
+max(
+  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Inicio'], 'T', items('Aplicar_a_cada_uno')?['Hora Inicio'], ':00')),
+  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Inicio'], 'T', first(outputs('Obtener_elementos_2')?['body/value'])?['Open'], ':00'))
+)
+
+min(
+  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Fin'], 'T', items('Aplicar_a_cada_uno')?['Hora Fin'], ':00')),
+  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Fin'], 'T', first(outputs('Obtener_elementos_2')?['body/value'])?['Close'], ':00'))
+)
+
+if(
+  less(outputs('FinReal'), outputs('InicioReal')),
+  0,
+  div(sub(outputs('FinReal'), outputs('InicioReal')), 600000000)
+)
