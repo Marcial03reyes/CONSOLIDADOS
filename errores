@@ -1,4 +1,1 @@
-items('Apply_to_each')?['Fecha Inicio']
-items('Apply_to_each')?['Fecha Fin']
-items('Apply_to_each')?['Hora Inicio']
-items('Apply_to_each')?['Hora Fin']
+if(empty(items('Apply_to_each')?['Inicio']), null, formatDateTime(items('Apply_to_each')?['Inicio'], 'yyyy-MM-dd'))
