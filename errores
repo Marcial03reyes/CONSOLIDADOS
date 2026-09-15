@@ -1,17 +1,3 @@
-max(
-  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Inicio'], 'T', items('Aplicar_a_cada_uno')?['Hora Inicio'], ':00')),
-  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Inicio'], 'T', first(outputs('Obtener_elementos_2')?['body/value'])?['Open'], ':00'))
-)
+{"dataset":"https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio","table":"37c6b5cf-519b-424f-bf48-d3487afc42d3","$filter":"Title eq 'items('Apply_to_each')?['Área']'"}
 
-min(
-  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Fin'], 'T', items('Aplicar_a_cada_uno')?['Hora Fin'], ':00')),
-  ticks(concat(items('Aplicar_a_cada_uno')?['Fecha Fin'], 'T', first(outputs('Obtener_elementos_2')?['body/value'])?['Close'], ':00'))
-)
-
-if(
-  less(outputs('FinReal'), outputs('InicioReal')),
-  0,
-  div(sub(outputs('FinReal'), outputs('InicioReal')), 600000000)
-)
-
-Title eq 'items('Apply_to_each')?['Área']'
+{"status":400,"message":"The expression \"Title eq 'items('Apply_to_each')?['Área']'\" is not valid. Creating query failed.\r\nclientRequestId: 44ab49b7-1bcb-4b25-a103-8b1e4ab79cce\r\nserviceRequestId: 50543ba2-f0b1-f000-7701-893e2835c004"}
