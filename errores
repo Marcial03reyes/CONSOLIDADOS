@@ -1,3 +1,1 @@
-{"dataset":"https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocio","table":"37c6b5cf-519b-424f-bf48-d3487afc42d3","$filter":"Title eq 'items('Apply_to_each')?['Área']'"}
-
-{"status":400,"message":"The expression \"Title eq 'items('Apply_to_each')?['Área']'\" is not valid. Creating query failed.\r\nclientRequestId: 44ab49b7-1bcb-4b25-a103-8b1e4ab79cce\r\nserviceRequestId: 50543ba2-f0b1-f000-7701-893e2835c004"}
+InvalidTemplate. Unable to process template language expressions in action 'Inicio_Real' inputs at line '0' and column '0': 'In function 'ticks', the value provided for date time string 'T:00' was not valid. The datetime string must match ISO 8601 format.'.
