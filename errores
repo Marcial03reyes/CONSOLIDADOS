@@ -1,1 +1,51 @@
-if(empty(items('Apply_to_each')?['Inicio']), null, formatDateTime(items('Apply_to_each')?['Inicio'], 'yyyy-MM-dd'))
+let
+    Origen_SharePoint = SharePoint.Files("https://pacificocia.sharepoint.com/sites/ContinuidaddeNegocios266", [ApiVersion = 15]),
+
+    Solo_excels = Table.SelectRows(Origen_SharePoint, each List.Contains({".xls",".xlsx",".xlsm"}, Text.Lower([Extension]))),
+
+    Solo_carpeta_interrupciones = Table.SelectRows(Solo_excels, each Text.Contains([Folder Path], "Reporte de Interrupciones")),
+
+    Excluir_nombres_no_deseados = Table.SelectRows(Solo_carpeta_interrupciones, each 
+        not Text.Contains([Name], "Circular") and 
+        not Text.Contains([Name], "Casos") and 
+        not Text.Contains([Name], "Riesgo") and 
+        not Text.Contains([Name], "Bitacora") and
+        not Text.Contains([Name], "Sustento")
+    ),
+
+    Quitar_columnas_innecesarias = Table.RemoveColumns(Excluir_nombres_no_deseados, {"Extension", "Date accessed", "Date modified", "Date created"}),
+
+    Extraer_area = Table.AddColumn(Quitar_columnas_innecesarias, "Área", each Text.BetweenDelimiters([Folder Path], "Áreas/", "/"), type text),
+
+    Extraer_carpeta_mes = Table.AddColumn(Extraer_area, "CarpetaMes", each Text.BetweenDelimiters([Folder Path], "Reporte de Interrupciones/", "/"), type text),
+
+    Extraer_numero_mes = Table.AddColumn(Extraer_carpeta_mes, "NumeroMes", each Number.FromText(Text.BeforeDelimiter([CarpetaMes], ".")), Int64.Type),
+
+    Extraer_anio_carpeta = Table.AddColumn(Extraer_numero_mes, "AnioCarpeta", each 
+        let
+            SegmentoAnio = Text.BetweenDelimiters([Folder Path], "Áreas/" & [Área] & "/", "/"),
+            SoloDigitos = Text.Select(SegmentoAnio, {"0".."9"}),
+            UltimosCuatro = Text.End(SoloDigitos, 4)
+        in
+            Number.FromText(UltimosCuatro), 
+        Int64.Type
+    ),
+
+    Filtrar_desde_julio_2026 = Table.SelectRows(Extraer_anio_carpeta, each 
+        [AnioCarpeta] > 2026 or 
+        ([AnioCarpeta] = 2026 and [NumeroMes] >= 7)
+    ),
+
+    Reordenar_columnas_finales = Table.ReorderColumns(Filtrar_desde_julio_2026, {"Área", "AnioCarpeta", "NumeroMes", "CarpetaMes", "Name", "Folder Path", "Attributes"}),
+    #"Archivos ocultos filtrados1" = Table.SelectRows(Reordenar_columnas_finales, each [Attributes]?[Hidden]? <> true),
+    #"Invocar función personalizada1" = Table.AddColumn(#"Archivos ocultos filtrados1", "Transformar archivo", each #"Transformar archivo"([Content])),
+    #"Otras columnas quitadas1" = Table.SelectColumns(#"Invocar función personalizada1",{"Área", "AnioCarpeta", "NumeroMes", "Transformar archivo"}),
+    #"Columna de tabla expandida1" = Table.ExpandTableColumn(#"Otras columnas quitadas1", "Transformar archivo", Table.ColumnNames(#"Transformar archivo"(#"Archivo de ejemplo"))),
+    Reemplazar_guion_null = Table.ReplaceValue(#"Columna de tabla expandida1","-",null,Replacer.ReplaceValue,{"Hora Inicio", "Hora Fin", "Duración"}),
+    #"Tipo cambiado" = Table.TransformColumnTypes(Reemplazar_guion_null,{{"N°", Int64.Type}, {"Aplicativo afectado o proveedors afectado", type text}, {"Descripción de la interrupción", type text}, {"Plan de acción para la mitigación de la contingencia", type text}, {"Impacto en los procesos", type any}, {"Grado de Afectación del equipo", type any}, {"Fecha Inicio", type date}, {"Fecha Fin", type date}, {"Hora Inicio", type time}, {"Hora Fin", type time}, {"Duración", type any}, {"Ticket generado", type text}}),
+    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"N°"}),
+    #"Columnas reordenadas" = Table.ReorderColumns(#"Columnas quitadas",{"AnioCarpeta", "NumeroMes", "Área", "Aplicativo afectado o proveedors afectado", "Descripción de la interrupción", "Plan de acción para la mitigación de la contingencia", "Impacto en los procesos", "Grado de Afectación del equipo", "Fecha Inicio", "Fecha Fin", "Hora Inicio", "Hora Fin", "Duración", "Ticket generado"}),
+    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas reordenadas",{{"Aplicativo afectado o proveedors afectado", "Aplicativo o proveedor afectado"}, {"Descripción de la interrupción", "Descripción"}, {"Plan de acción para la mitigación de la contingencia", "Plan de acción"}, {"Impacto en los procesos", "Impacto en procesos"}, {"Duración", "Duración reportada"}}),
+    #"Personalizada agregada" = Table.AddColumn(#"Columnas con nombre cambiado", "IDOrigen", each Text.From(Text.Length([Área])) & Text.Start([Área], 3) & "-" & Text.From([Fecha Inicio]) & "-" & Text.From([Hora Inicio]))
+in
+    #"Personalizada agregada"
