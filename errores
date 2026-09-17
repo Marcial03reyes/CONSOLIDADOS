@@ -1,6 +1,9 @@
-and(
-  greaterOrEquals(item()?['Fecha'], '2026-07-01'),
-  or(equals(toLower(item()?['Incidentes']), 'sí'), equals(toLower(item()?['Incidentes']), 'si')),
+@and(
+  greaterOrEquals(formatDateTime(convertFromUtc(item()?['Fin'], 'SA Pacific Standard Time'), 'yyyy-MM-dd'), '2026-07-01'),
+  or(
+    equals(toLower(item()?['Incidentes']), 'sí'),
+    equals(toLower(item()?['Incidentes']), 'si')
+  ),
   less(
     if(equals(toLower(item()?['Periododereporte']), 'enero'), 0,
       if(equals(toLower(item()?['Periododereporte']), 'january'), 0,
@@ -51,6 +54,6 @@ and(
         )
       )
     ),
-    sub(int(formatDateTime(utcNow(), 'MM')), 1)
+    sub(int(formatDateTime(convertFromUtc(item()?['Fecha'], 'SA Pacific Standard Time'), 'MM')), 1)
   )
 )
