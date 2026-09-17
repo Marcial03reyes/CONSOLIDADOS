@@ -1,11 +1,11 @@
 Fecha Inicio:
-if(empty(items('Apply_to_each')?['Inicio']), null, formatDateTime(items('Apply_to_each')?['Inicio'], 'yyyy-MM-dd'))
+if(empty(items('Apply_to_each')?['Inicio']), null, formatDateTime(convertFromUtc(items('Apply_to_each')?['Inicio'], 'SA Pacific Standard Time'), 'yyyy-MM-dd'))
 
 Hora Inicio:
-if(empty(items('Apply_to_each')?['Inicio']), null, formatDateTime(items('Apply_to_each')?['Inicio'], 'HH:mm'))
+if(empty(items('Apply_to_each')?['Inicio']), null, formatDateTime(convertFromUtc(items('Apply_to_each')?['Inicio'], 'SA Pacific Standard Time'), 'HH:mm'))
 
 Fecha Fin:
-if(empty(items('Apply_to_each')?['Fin']), null, formatDateTime(items('Apply_to_each')?['Fin'], 'dd-MM-yyyy'))
+if(empty(items('Apply_to_each')?['Fin']), null, formatDateTime(convertFromUtc(items('Apply_to_each')?['Fin'], 'SA Pacific Standard Time'), 'dd-MM-yyyy'))
 
 Hora Fin:
-if(empty(items('Apply_to_each')?['Fin']), null, formatDateTime(items('Apply_to_each')?['Fin'], 'HH:mm'))
+if(empty(items('Apply_to_each')?['Fin']), null, formatDateTime(convertFromUtc(items('Apply_to_each')?['Fin'], 'SA Pacific Standard Time'), 'HH:mm'))
