@@ -1,4 +1,4 @@
-@and(
+and(
   greaterOrEquals(formatDateTime(convertFromUtc(item()?['Fin'], 'SA Pacific Standard Time'), 'yyyy-MM-dd'), '2026-07-01'),
   or(
     equals(toLower(item()?['Incidentes']), 'sí'),
