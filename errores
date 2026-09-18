@@ -1,25 +1,15 @@
+Compose FechaFin ISO:
+concat(
+  substring(items('Apply_to_each')?['FechaFin'],6,4),
+  '-',
+  substring(items('Apply_to_each')?['FechaFin'],3,2),
+  '-',
+  substring(items('Apply_to_each')?['FechaFin'],0,2)
+)
+
+Compose Close Ajustado:
 if(
-  or(
-    empty(items('Apply_to_each')?['FechaFin']),
-    empty(items('Apply_to_each')?['HoraFin'])
-  ),
-  null,
-  min(
-    ticks(
-      concat(
-        outputs('Compose_FechaFin_ISO'),
-        'T',
-        items('Apply_to_each')?['HoraFin'],
-        ':00'
-      )
-    ),
-    ticks(
-      concat(
-        outputs('Compose_FechaFin_ISO'),
-        'T',
-        outputs('Compose_Close_Ajustado'),
-        ':00'
-      )
-    )
-  )
+  equals(first(outputs('Get_matriz')?['body/value'])?['Close'],'24:00'),
+  '23:59',
+  first(outputs('Get_matriz')?['body/value'])?['Close']
 )
