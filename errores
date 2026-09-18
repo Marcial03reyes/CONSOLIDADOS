@@ -1,50 +1,11 @@
-and(
-  or(
-    empty(item()?['Fin']),
-    greaterOrEquals(formatDateTime(convertFromUtc(item()?['Fin'], 'SA Pacific Standard Time'), 'yyyy-MM-dd'), '2026-07-01')
-  ),
-  or(
-    equals(toLower(item()?['Incidentes']), 'sí'),
-    equals(toLower(item()?['Incidentes']), 'si')
-  ),
-  less(
-    if(
-      or(equals(toLower(item()?['Periododereporte']), 'enero'), equals(toLower(item()?['Periododereporte']), 'january')), 0,
-      if(
-        or(equals(toLower(item()?['Periododereporte']), 'febrero'), equals(toLower(item()?['Periododereporte']), 'february')), 1,
-        if(
-          or(equals(toLower(item()?['Periododereporte']), 'marzo'), equals(toLower(item()?['Periododereporte']), 'march')), 2,
-          if(
-            or(equals(toLower(item()?['Periododereporte']), 'abril'), equals(toLower(item()?['Periododereporte']), 'april')), 3,
-            if(
-              or(equals(toLower(item()?['Periododereporte']), 'mayo'), equals(toLower(item()?['Periododereporte']), 'may')), 4,
-              if(
-                or(equals(toLower(item()?['Periododereporte']), 'junio'), equals(toLower(item()?['Periododereporte']), 'june')), 5,
-                if(
-                  or(equals(toLower(item()?['Periododereporte']), 'julio'), equals(toLower(item()?['Periododereporte']), 'july')), 6,
-                  if(
-                    or(equals(toLower(item()?['Periododereporte']), 'agosto'), equals(toLower(item()?['Periododereporte']), 'august')), 7,
-                    if(
-                      or(equals(toLower(item()?['Periododereporte']), 'septiembre'), equals(toLower(item()?['Periododereporte']), 'september')), 8,
-                      if(
-                        or(equals(toLower(item()?['Periododereporte']), 'octubre'), equals(toLower(item()?['Periododereporte']), 'october')), 9,
-                        if(
-                          or(equals(toLower(item()?['Periododereporte']), 'noviembre'), equals(toLower(item()?['Periododereporte']), 'november')), 10,
-                          if(
-                            or(equals(toLower(item()?['Periododereporte']), 'diciembre'), equals(toLower(item()?['Periododereporte']), 'december')), 11,
-                            -1
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    ),
-    sub(int(formatDateTime(convertFromUtc(concat(item()?['Fecha'], 'Z'), 'SA Pacific Standard Time'), 'MM')), 1)
+if(
+  or(empty(items('Apply_to_each')?['FechaInicio']), empty(items('Apply_to_each')?['HoraInicio'])),
+  null,
+  max(
+    ticks(concat(items('Apply_to_each')?['FechaInicio'], 'T', items('Apply_to_each')?['HoraInicio'], ':00')),
+    ticks(concat(items('Apply_to_each')?['FechaInicio'], 'T', first(outputs('Get_matriz')?['body/value'])?['Open'], ':00'))
   )
 )
+
+
+InvalidTemplate. Unable to process template language expressions in action 'inicio_Real' inputs at line '0' and column '0': 'In function 'ticks', the value provided for date time string '13-07-2026T10:43:00' was not valid. The datetime string must match ISO 8601 format.'.
