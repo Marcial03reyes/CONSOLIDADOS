@@ -1,9 +1,1 @@
-if(
-  or(empty(items('Apply_to_each')?['FechaInicio']), empty(items('Apply_to_each')?['HoraInicio']), empty(items('Apply_to_each')?['FechaFin']), empty(items('Apply_to_each')?['HoraFin'])),
-  null,
-  if(
-    less(outputs('Fin_Real'), outputs('Inicio_Real')),
-    0,
-    div(sub(outputs('Fin_Real'), outputs('Inicio_Real')), 600000000)
-  )
-)
+Flow run failed. Action 'Get_reporte_interrup' failed: The field 'Ticket' of type 'Note' cannot be used in the query filter expression. clientRequestId: 1f4d5b4f-5115-4cf8-8bc3-97d8e11d287f serviceRequestId: 4e6f3ca2-90c5-f000-7701-8c4013f8ab3c
