@@ -1,11 +1,1 @@
-if(
-  or(empty(items('Apply_to_each')?['FechaInicio']), empty(items('Apply_to_each')?['HoraInicio'])),
-  null,
-  max(
-    ticks(concat(items('Apply_to_each')?['FechaInicio'], 'T', items('Apply_to_each')?['HoraInicio'], ':00')),
-    ticks(concat(items('Apply_to_each')?['FechaInicio'], 'T', first(outputs('Get_matriz')?['body/value'])?['Open'], ':00'))
-  )
-)
-
-
-InvalidTemplate. Unable to process template language expressions in action 'inicio_Real' inputs at line '0' and column '0': 'In function 'ticks', the value provided for date time string '13-07-2026T10:43:00' was not valid. The datetime string must match ISO 8601 format.'.
+Flow run failed. Action 'Inicio_Real' failed: Unable to process template language expressions in action 'Inicio_Real' inputs at line '0' and column '0': 'In function 'ticks', the value provided for date time string '13-07-2026T10:43:00' was not valid. The datetime string must match ISO 8601 format.'.
