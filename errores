@@ -1,1 +1,25 @@
-InvalidTemplate. Unable to process template language expressions in action 'Fin_Real' inputs at line '0' and column '0': 'In function 'ticks', the value provided for date time string '7-13-6--20T11:26:00' was not valid. The datetime string must match ISO 8601 format.'.
+if(
+  or(
+    empty(items('Apply_to_each')?['FechaFin']),
+    empty(items('Apply_to_each')?['HoraFin'])
+  ),
+  null,
+  min(
+    ticks(
+      concat(
+        outputs('Compose_FechaFin_ISO'),
+        'T',
+        items('Apply_to_each')?['HoraFin'],
+        ':00'
+      )
+    ),
+    ticks(
+      concat(
+        outputs('Compose_FechaFin_ISO'),
+        'T',
+        outputs('Compose_Close_Ajustado'),
+        ':00'
+      )
+    )
+  )
+)
